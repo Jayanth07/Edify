@@ -4,7 +4,6 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-
 }
 
 body{
@@ -31,7 +30,7 @@ body{
 .deneb_footer .widget_wrapper .widget .widget_title h4:after {
     content: "";
     display: block;
-    background: url(../images/shape/line.png) no-repeat;
+    /* background: url(../images/shape/line.png) no-repeat; */
     max-width: 38px;
     height: 2px;
     margin-top: 5px;
@@ -124,7 +123,7 @@ body{
 }
 .deneb_cta .cta_wrapper:after {
     content: "";
-    background: url(../images/shape/cta_shape.png) no-repeat;
+    /* background: url(../images/shape/cta_shape.png) no-repeat; */
     background-position: bottom;
     width: 100%;
     height: 100%;
@@ -145,7 +144,7 @@ body{
 .deneb_cta .cta_wrapper .cta_content h3:after {
     content: "";
     display: block;
-    background: url(../images/shape/line_2.png) no-repeat;
+    /* background: url(../images/shape/line_2.png) no-repeat; */
     max-width: 110px;
     height: 2px;
     margin-top: 13px;
@@ -178,4 +177,11 @@ body{
 .deneb_cta .cta_wrapper .button_box .deneb_btn:hover,
 .deneb_cta .cta_wrapper .button_box .deneb_btn:focus {
     box-shadow: 2.5px 4.33px 15px 0px rgba(0, 0, 0, 0.15);
+}
+
+#logo {
+    height: auto;
+    width: auto;
+    max-width: 120px;
+    max-height: 45px;
 }
