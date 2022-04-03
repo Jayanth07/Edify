@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import Header from './header'
-import Footer from './footer'
+import { Outlet, Link } from "react-router-dom" // Check '<Outlet>'
+import Header from '../components/header'
+import Footer from '../components/footer'
 
 export default class HomePage extends Component {
 
@@ -17,6 +18,9 @@ export default class HomePage extends Component {
 				<div class="col-12 text-center">
 					<h1 class="fw-light">Learn yourselves a better tomorrow</h1>
 					<p class="lead">Teach and Learn</p>
+					<div class="button_box">
+						<Link to="/tutors"><a href="#" class="btn btn-lg btn-warning"><i class="bi bi-search" /> Search Tutors</a></Link>
+					</div>
 				</div>
 				</div>
 				</div>
