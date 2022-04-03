@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Outlet, Link } from "react-router-dom" // Check '<Outlet>'
 import Header from '../components/header'
 import Footer from '../components/footer'
+import { connect } from 'react-redux'
 
 export default class HomePage extends Component {
 
