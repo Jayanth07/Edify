@@ -1,11 +1,16 @@
-import logo from './logo.svg';
 import './App.css';
-import HomePage from './components/homepage';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import HomePage from './pages/Home';
+import SearchTutors from './pages/SearchTutors';
 
 function App() {
-  console.log('hello')
   return (
-   <HomePage />
+    <BrowserRouter>
+      <Routes>
+        <Route index element={<HomePage />} />
+        <Route path='tutors' element={<SearchTutors />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
