@@ -52,7 +52,7 @@ class Cards extends Component {
     </div>
     <div class="buttons"> <button class="btn btn-outline-primary px-4">Message</button> 
     <Link to={PATH.TUTOR_DETAILS}>
-    <button class="btn btn-primary px-4 ms-3" onClick={() => this.openDetails(tutor.id)}>Profile</button>
+    <button class="btn px-4 ms-3" onClick={() => this.openDetails(tutor.id)}>Profile</button>
         </Link>    </div>
     </div>
     </div>
