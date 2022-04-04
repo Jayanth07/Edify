@@ -7,4 +7,13 @@ function selectTutor(tutorId) {
     }
 }
 
-export { selectTutor }
+function setTutors(tutors) {
+    return {
+        type: 'SET_TUTORS',
+        payload: {
+            tutors
+        }
+    }
+}
+
+export { selectTutor, setTutors }

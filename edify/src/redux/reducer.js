@@ -8,6 +8,12 @@ const tutorsReducer = (state=[], action) => {
                 id: action.payload.id
             };
         
+        case 'SET_TUTORS':
+            return {
+                ...state,
+                tutors: action.payload.tutors
+            };
+
         default: return state
     }
 }

@@ -1,18 +1,86 @@
 [
-{
-"first_name":"Nurcan",
-"last_name":"Yuruk",
-"path":"nurcan.png",
-"email":"nurcan.yuruk@utdallas.edu",
-"phone_code":"+1",
-"phone_number":"4697565654",
-"DOB":"11/24/1985",
-"location":"Dallas, TX",
-"bio":"CS Professor at UT Dallas",
-"courses":["wpl","Db design"],
-"rating":4.5,
-"about_me":  "The majority of my fifteen year career in education as been dedicated to supporting and educating students with disabilities. Unpacking standards, scaffolding instruction, differentiating lessons and maintaining high expectations are some of the strategies I use to promote academic success. Providing targeting intervention with compassion and understanding is essential to increasing student confidence and motivation. A confident and motivated student is a successful student! The majority of my fifteen year career in education as been dedicated to supporting and educating students with disabilities. Unpacking standards, scaffolding instruction, differentiating lessons and maintaining high expectations are some of the strategies I use to promote academic success. Providing targeting intervention with compassion and understanding is essential to increasing student confidence and motivation. A confident and motivated student is a successful student!The majority of my fifteen year career in education as been dedicated to supporting and educating students with disabilities. Unpacking standards, scaffolding instruction, differentiating lessons and maintaining high expectations are some of the strategies I use to promote academic success. Providing targeting intervention with compassion and understanding is essential to increasing student confidence and motivation. A confident and motivated student is a successful student!The majority of my fifteen year career in education as been dedicated to supporting and educating students with disabilities. Unpacking standards, scaffolding instruction, differentiating lessons and maintaining high expectations are some of the strategies I use to promote academic success. Providing targeting intervention with compassion and understanding is essential to increasing student confidence and motivation. A confident and motivated student is a successful student!",  
-"certificates":["WPL","FrontEnd Systems","Web Programming Languages"]
-}
+    {
+        "id": "1",
+        "first_name":"Nurcan1",
+        "last_name":"Yuruk",
+        "path":"nurcan.png",
+        "email":"nurcan.yuruk@utdallas.edu",
+        "phone_code":"+1",
+        "phone_number":"4697565654",
+        "DOB":"11/24/1985",
+        "location":"Dallas, TX",
+        "bio":"CS Professor at UT Dallas",
+        "courses":["wpl","Db design"],
+        "rating":4.5,
+        "about_me":  "The majority of my fifteen year career in education as been dedicated to supporting and educating students with disabilities. Unpacking standards, scaffolding instruction, differentiating lessons and maintaining high expectations are some of the strategies I use to promote academic success. Providing targeting intervention with compassion and understanding is essential to increasing student confidence and motivation. A confident and motivated student is a successful student! The majority of my fifteen year career in education as been dedicated to supporting and educating students with disabilities. Unpacking standards, scaffolding instruction, differentiating lessons and maintaining high expectations are some of the strategies I use to promote academic success. Providing targeting intervention with compassion and understanding is essential to increasing student confidence and motivation. A confident and motivated student is a successful student!The majority of my fifteen year career in education as been dedicated to supporting and educating students with disabilities. Unpacking standards, scaffolding instruction, differentiating lessons and maintaining high expectations are some of the strategies I use to promote academic success. Providing targeting intervention with compassion and understanding is essential to increasing student confidence and motivation. A confident and motivated student is a successful student!The majority of my fifteen year career in education as been dedicated to supporting and educating students with disabilities. Unpacking standards, scaffolding instruction, differentiating lessons and maintaining high expectations are some of the strategies I use to promote academic success. Providing targeting intervention with compassion and understanding is essential to increasing student confidence and motivation. A confident and motivated student is a successful student!",  
+        "certificates":["WPL","FrontEnd Systems","Web Programming Languages"]
+    },
+    {
+        "id": "2",
+        "first_name":"Nurcan2",
+        "last_name":"Yuruk",
+        "path":"nurcan.png",
+        "email":"nurcan.yuruk@utdallas.edu",
+        "phone_code":"+1",
+        "phone_number":"4697565654",
+        "DOB":"11/24/1985",
+        "location":"Dallas, TX",
+        "bio":"CS Professor at UT Dallas",
+        "courses":["wpl","Db design"],
+        "rating":4.5,
+        "about_me":  "The majority of my fifteen year career in education as been dedicated to supporting and educating students with disabilities. Unpacking standards, scaffolding instruction, differentiating lessons and maintaining high expectations are some of the strategies I use to promote academic success. Providing targeting intervention with compassion and understanding is essential to increasing student confidence and motivation. A confident and motivated student is a successful student! The majority of my fifteen year career in education as been dedicated to supporting and educating students with disabilities. Unpacking standards, scaffolding instruction, differentiating lessons and maintaining high expectations are some of the strategies I use to promote academic success. Providing targeting intervention with compassion and understanding is essential to increasing student confidence and motivation. A confident and motivated student is a successful student!The majority of my fifteen year career in education as been dedicated to supporting and educating students with disabilities. Unpacking standards, scaffolding instruction, differentiating lessons and maintaining high expectations are some of the strategies I use to promote academic success. Providing targeting intervention with compassion and understanding is essential to increasing student confidence and motivation. A confident and motivated student is a successful student!The majority of my fifteen year career in education as been dedicated to supporting and educating students with disabilities. Unpacking standards, scaffolding instruction, differentiating lessons and maintaining high expectations are some of the strategies I use to promote academic success. Providing targeting intervention with compassion and understanding is essential to increasing student confidence and motivation. A confident and motivated student is a successful student!",  
+        "certificates":["WPL","FrontEnd Systems","Web Programming Languages"]
+    },
+    {
+        "id": "3",
+
+        "first_name":"Nurcan",
+        "last_name":"Yuruk",
+        "path":"nurcan.png",
+        "email":"nurcan.yuruk@utdallas.edu",
+        "phone_code":"+1",
+        "phone_number":"4697565654",
+        "DOB":"11/24/1985",
+        "location":"Dallas, TX",
+        "bio":"CS Professor at UT Dallas",
+        "courses":["wpl","Db design"],
+        "rating":4.5,
+        "about_me":  "The majority of my fifteen year career in education as been dedicated to supporting and educating students with disabilities. Unpacking standards, scaffolding instruction, differentiating lessons and maintaining high expectations are some of the strategies I use to promote academic success. Providing targeting intervention with compassion and understanding is essential to increasing student confidence and motivation. A confident and motivated student is a successful student! The majority of my fifteen year career in education as been dedicated to supporting and educating students with disabilities. Unpacking standards, scaffolding instruction, differentiating lessons and maintaining high expectations are some of the strategies I use to promote academic success. Providing targeting intervention with compassion and understanding is essential to increasing student confidence and motivation. A confident and motivated student is a successful student!The majority of my fifteen year career in education as been dedicated to supporting and educating students with disabilities. Unpacking standards, scaffolding instruction, differentiating lessons and maintaining high expectations are some of the strategies I use to promote academic success. Providing targeting intervention with compassion and understanding is essential to increasing student confidence and motivation. A confident and motivated student is a successful student!The majority of my fifteen year career in education as been dedicated to supporting and educating students with disabilities. Unpacking standards, scaffolding instruction, differentiating lessons and maintaining high expectations are some of the strategies I use to promote academic success. Providing targeting intervention with compassion and understanding is essential to increasing student confidence and motivation. A confident and motivated student is a successful student!",  
+        "certificates":["WPL","FrontEnd Systems","Web Programming Languages"]
+    },
+    {
+        "id": "4",
+
+        "first_name":"Nurcan",
+        "last_name":"Yuruk",
+        "path":"nurcan.png",
+        "email":"nurcan.yuruk@utdallas.edu",
+        "phone_code":"+1",
+        "phone_number":"4697565654",
+        "DOB":"11/24/1985",
+        "location":"Dallas, TX",
+        "bio":"CS Professor at UT Dallas",
+        "courses":["wpl","Db design"],
+        "rating":4.5,
+        "about_me":  "The majority of my fifteen year career in education as been dedicated to supporting and educating students with disabilities. Unpacking standards, scaffolding instruction, differentiating lessons and maintaining high expectations are some of the strategies I use to promote academic success. Providing targeting intervention with compassion and understanding is essential to increasing student confidence and motivation. A confident and motivated student is a successful student! The majority of my fifteen year career in education as been dedicated to supporting and educating students with disabilities. Unpacking standards, scaffolding instruction, differentiating lessons and maintaining high expectations are some of the strategies I use to promote academic success. Providing targeting intervention with compassion and understanding is essential to increasing student confidence and motivation. A confident and motivated student is a successful student!The majority of my fifteen year career in education as been dedicated to supporting and educating students with disabilities. Unpacking standards, scaffolding instruction, differentiating lessons and maintaining high expectations are some of the strategies I use to promote academic success. Providing targeting intervention with compassion and understanding is essential to increasing student confidence and motivation. A confident and motivated student is a successful student!The majority of my fifteen year career in education as been dedicated to supporting and educating students with disabilities. Unpacking standards, scaffolding instruction, differentiating lessons and maintaining high expectations are some of the strategies I use to promote academic success. Providing targeting intervention with compassion and understanding is essential to increasing student confidence and motivation. A confident and motivated student is a successful student!",  
+        "certificates":["WPL","FrontEnd Systems","Web Programming Languages"]
+    },
+    {
+        "id": "5",
+
+        "first_name":"Nurcan",
+        "last_name":"Yuruk",
+        "path":"nurcan.png",
+        "email":"nurcan.yuruk@utdallas.edu",
+        "phone_code":"+1",
+        "phone_number":"4697565654",
+        "DOB":"11/24/1985",
+        "location":"Dallas, TX",
+        "bio":"CS Professor at UT Dallas",
+        "courses":["wpl","Db design"],
+        "rating":4.5,
+        "about_me":  "The majority of my fifteen year career in education as been dedicated to supporting and educating students with disabilities. Unpacking standards, scaffolding instruction, differentiating lessons and maintaining high expectations are some of the strategies I use to promote academic success. Providing targeting intervention with compassion and understanding is essential to increasing student confidence and motivation. A confident and motivated student is a successful student! The majority of my fifteen year career in education as been dedicated to supporting and educating students with disabilities. Unpacking standards, scaffolding instruction, differentiating lessons and maintaining high expectations are some of the strategies I use to promote academic success. Providing targeting intervention with compassion and understanding is essential to increasing student confidence and motivation. A confident and motivated student is a successful student!The majority of my fifteen year career in education as been dedicated to supporting and educating students with disabilities. Unpacking standards, scaffolding instruction, differentiating lessons and maintaining high expectations are some of the strategies I use to promote academic success. Providing targeting intervention with compassion and understanding is essential to increasing student confidence and motivation. A confident and motivated student is a successful student!The majority of my fifteen year career in education as been dedicated to supporting and educating students with disabilities. Unpacking standards, scaffolding instruction, differentiating lessons and maintaining high expectations are some of the strategies I use to promote academic success. Providing targeting intervention with compassion and understanding is essential to increasing student confidence and motivation. A confident and motivated student is a successful student!",  
+        "certificates":["WPL","FrontEnd Systems","Web Programming Languages"]
+    }
 
 ]
