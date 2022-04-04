@@ -10,6 +10,10 @@ import Footer from '../components/footer'
 
 class Cards extends Component {
 
+    state = {
+        displayTutors: this.props.tutors
+    }
+
     componentDidMount(){
         if (this.props.tutors === undefined) {
             fetch('tutors.json', {
@@ -31,34 +35,66 @@ class Cards extends Component {
         this.props.selectTutor(id);
     }
 
-    render() {
+    filterTutors = () => {
+        let text = document.getElementById('filter').value;
+        if (!text) {
+            this.setState({displayTutors: this.props.tutors});
+            return;
+        }
 
-    console.log('Here are tutors')
-    console.log(this.props)
+        let filteredTutors = this.props.tutors.filter(t => {
+            // Add if name matches
+            if (t.first_name.toLowerCase().includes(text) || t.last_name.toLowerCase().includes(text))
+                return true;
+            
+            // Add if one of the courses match
+            for(const c of t.courses) {
+                if (c.toLowerCase().includes(text))
+                    return true;
+            }
+            
+            return false;
+        });
+        
+        this.setState({displayTutors: filteredTutors})
+    }
+
+    render() {
     return (
-    <div>
-			<Header />
+    <div style={{ backgroundColor: 'rgba(255, 255, 255, 0.85)'}}>
+        <div class='mb-10'>
+            <Header />
+        </div>
+
+        <div class="col-5 mt-8 text-center">
+            <form class="d-flex align-items-center">
+                <input class="form-control input-sm" id='filter' type="search" placeholder="Search" aria-label="Search" />
+                <button type="button" id='filterBtn' class="btn btn-warning btn-sm m-1" onClick={() => this.filterTutors()}>Filter</button>
+            </form>
+        </div>
 
     
-        {this.props.tutors && this.props.tutors.map( (tutor, id) => (
-    <div class="row d-flex justify-content-center card-lay m-4" key={id}>
-    <div class="col-md-7">
-    <div class="card p-3 py-4">
-    <div class="text-center"> <img src={tutor.path} width="100" class="rounded-circle"/> </div>
-    <div class="text-center mt-3"> <span class="bg-secondary p-1 rounded text-white">1000+ Chats</span>&nbsp;<span class="bg-secondary p-1 rounded text-white">Certified</span>
-    <h5 class="mt-2 mb-0"><div className="tutor-info-name"> {tutor.first_name} {tutor.last_name} </div> </h5>
-    <div class="px-4 mt-1">
-    <p class="fonts"><h3><i className="tutor-bio">{tutor.bio}</i></h3></p>
-    </div>
-    <div class="buttons"> <button class="btn btn-outline-primary px-4">Message</button> 
-    <Link to={PATH.TUTOR_DETAILS}>
-    <button class="btn px-4 ms-3" onClick={() => this.openDetails(tutor.id)}>Profile</button>
-        </Link>    </div>
-    </div>
-    </div>
-    </div>
-    </div>
-))}
+        {this.state.displayTutors && this.state.displayTutors.map((tutor, id) => (
+        <div class="row d-flex justify-content-center card-lay m-4" key={id}>
+            <div class="col-md-7">
+                <div class="card p-3 py-4">
+                    <div class="text-center"> <img src={tutor.path} width="100" class="rounded-circle"/> </div>
+                    <div class="text-center mt-3"> <span class="bg-secondary p-1 rounded text-white">1000+ Chats</span>&nbsp;<span class="bg-secondary p-1 rounded text-white">Certified</span>
+                        <h5 class="mt-2 mb-0"><div className="tutor-info-name"> {tutor.first_name} {tutor.last_name} </div> </h5>
+                        <div class="px-4 mt-1">
+                            <p class="fonts"><h3><i className="tutor-bio">{tutor.bio}</i></h3></p>
+                        </div>
+                        <div class="buttons">
+                            <button class="btn btn-outline-primary px-4">Message</button> 
+                            <Link to={PATH.TUTOR_DETAILS}>
+                                <button class="btn px-4 ms-3" onClick={() => this.openDetails(tutor.id)}>Profile</button>
+                            </Link>    
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        ))}
 
 
 {/* <div >
@@ -110,11 +146,7 @@ class Cards extends Component {
     </div>
 </div>
 </div> */}
-
-        
-        <Link to={PATH.TUTOR_DETAILS}>
-         <div id='tutor2' onClick={() => this.openDetails(2)}>Tutor 2</div>
-        </Link>    
+   
         <Footer />
         </div>
     )
