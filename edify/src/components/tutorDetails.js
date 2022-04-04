@@ -19,9 +19,9 @@ class TutorDetails extends Component {
         //     <h1>{this.props.tutorsId} is the selected tutor's id</h1>
             // <Footer />
         // </div>
-<div>
+    <div style={{ margin: '75px 0px 25px 0px' }}>
             <Header />
-            <div className="container p-4" style={{ backgroundColor: 'rgba(255, 255, 255, 0.85)'}}> 
+            <div className="container p-4" style={{ backgroundColor: 'rgba(255, 255, 255, 0.85)', borderRadius: '15px'}}> 
 
         { this.props.tutorDetails.map( (tutor, id) => (
            <div className="row" key={id}> 
@@ -81,7 +81,7 @@ class TutorDetails extends Component {
                  <div className="course-details">{tutor.courses.map( (course,id) => (<div key={id} className="course-details-text">{course}</div>))}</div>
                </div>
                <h4 >About me</h4>
-               <div>{tutor.about_me}
+               <div>{tutor.bio}
                </div>
 
                <div className="education">

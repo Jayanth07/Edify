@@ -1,5 +1,5 @@
-body {
-  padding-top: 80px;
+.profile-picture {
+  box-shadow: 7px 5px 5px #ccc;  
 }
 
 .card {
@@ -17,7 +17,7 @@ body {
   top: 0;
   width: 4px;
   height: 100%;
-  background-color: #E1BEE7;
+  background-color: #f0e8bc;
   transform: scaleY(1);
   transition: all 0.5s;
   transform-origin: bottom
@@ -30,7 +30,7 @@ body {
   top: 0;
   width: 4px;
   height: 100%;
-  background-color: #8E24AA;
+  background-color: #ac9317;
   transform: scaleY(0);
   transition: all 0.5s;
   transform-origin: bottom
@@ -53,26 +53,26 @@ body {
 
 .social-list li {
   padding: 10px;
-  color: #8E24AA;
+  color: #ffb70b;
   font-size: 19px
 }
 
 .buttons button:nth-child(1) {
-  border: 1px solid #8E24AA !important;
-  color: #8E24AA;
+  border: 1px solid #ffb70b !important;
+  color: #ffb70b;
   height: 40px
 }
 
 .buttons button:nth-child(1):hover {
-  border: 1px solid #8E24AA !important;
+  border: 1px solid #ffb70b !important;
   color: #fff;
   height: 40px;
-  background-color: #8E24AA
+  background-color: #ffb70b
 }
 
 .buttons button:nth-child(2) {
-  border: 1px solid #8E24AA !important;
-  background-color: #8E24AA;
+  border: 1px solid #ffb70b !important;
+  background-color: #ffb70b;
   color: #fff;
   height: 40px
 }

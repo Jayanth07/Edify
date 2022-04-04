@@ -45,9 +45,9 @@ a {
     apple color emoji, segoe ui emoji, segoe ui symbol;
   font-weight: bold;
   letter-spacing: -0.05rem;
-  font-size: 2.3rem;
+  font-size: 1.5rem;
   font-style: strong;
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 .courses {
