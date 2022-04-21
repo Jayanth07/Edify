@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Link } from "react-router-dom"
 import { selectTutor } from '../redux/actions'
 import Header from '../components/header'
 import Footer from '../components/footer'
@@ -8,8 +7,6 @@ import Footer from '../components/footer'
 class TutorDetails extends Component {
 
     render() {
-        console.log('totling')
-        console.log(this.props)
     return (
         // <div>
             // <Header />
@@ -27,7 +24,7 @@ class TutorDetails extends Component {
            <div className="row" key={id}> 
            <div className="tutor-info-name"> {tutor.first_name}  {tutor.last_name} </div> 
            <div className="col-sm-4">
-              <img className="img-fluid tutor-info-img" src={tutor.path} alt="error" width="312" height="638"/>  
+              <img className="img-fluid tutor-info-img" src={`../${tutor.path}`} alt="error" width="312" height="638"/>  
                <div className="tutor-info-details">
                  <div className="tutor-info-details-text">
                               <div className="icon">

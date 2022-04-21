@@ -15,16 +15,25 @@ class Cards extends Component {
     }
 
     componentDidMount(){
-        if (this.props.tutors === undefined) {
-            fetch('tutors.json', {
+        document.getElementById('filter').addEventListener('keydown', (e) => {
+            if (e.keyCode === 13) {
+                console.log('Enter')
+                this.filterTutors();
+            }
+        });
+        if (this.props.tutors === undefined || this.state.displayTutors === undefined) {
+            console.log('props')
+            console.log(this.props)
+            fetch('http://localhost:3000/tutors', {
                 headers : { 
                   'Content-Type': 'application/json',
-                   'Accept': 'application/json'
+                  'Accept': 'application/json'
                 }
               })
-              .then( res => res.json() )
-              .then( (data) => {
+              .then(res => res.json())
+              .then((data) => {
                   this.props.setTutors(data)
+                  this.setState({ displayTutors: data })
                   console.log(data)
               })
               .catch(console.log)
@@ -60,6 +69,8 @@ class Cards extends Component {
     }
 
     render() {
+        console.log('display list')
+        console.log(this.state)
     return (
     <div >
         <div class='mb-10'>
@@ -68,7 +79,7 @@ class Cards extends Component {
 
         <div class="col-5 text-center" style={{ marginTop: '75px', marginLeft: 'auto', marginRight: 'auto' }}>
             <form class="d-flex align-items-center">
-                <input class="form-control input-sm" style={{ height: '50px'}} id='filter' type="search" placeholder="Search for Tutors or Courses..." aria-label="Search" />
+                <input class="form-control input-sm" style={{ height: '50px'}} id='filter' onSubmit={() => {}} type="search" placeholder="Search for Tutors or Courses..." aria-label="Search" />
                 <button type="button" id='filterBtn' class="btn btn-warning btn-lg m-1" onClick={() => this.filterTutors()}>Filter</button>
             </form>
         </div>
@@ -87,7 +98,7 @@ class Cards extends Component {
                         </div>
                         <div class="buttons">
                             <button class="btn btn-outline-primary px-4">Message</button> 
-                            <Link to={PATH.TUTOR_DETAILS}>
+                            <Link to={`${tutor.id}`}>
                                 <button class="btn btn-warning px-4 ms-3 text-white" onClick={() => this.openDetails(tutor.id)}>Profile</button>
                             </Link>    
                         </div>
