@@ -1,25 +1,21 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { selectTutor } from '../redux/actions'
+import { useParams } from 'react-router-dom'
 import Header from '../components/header'
 import Footer from '../components/footer'
 
 class TutorDetails extends Component {
 
+  componentDidMount() {
+    window.scrollTo(0, 0);
+  }
+
     render() {
     return (
-        // <div>
-            // <Header />
-        //     <Link to="/tutors">
-        //     <div id='back' onClick={() => this.props.selectTutor(undefined)}>Go back</div>
-        //     </Link>
-        //     <h1>{this.props.tutorsId} is the selected tutor's id</h1>
-            // <Footer />
-        // </div>
     <div style={{ margin: '75px 0px 25px 0px' }}>
             <Header />
             <div className="container p-4" style={{ backgroundColor: 'rgba(255, 255, 255, 0.85)', borderRadius: '15px'}}> 
-
         { this.props.tutorDetails.map( (tutor, id) => (
            <div className="row" key={id}> 
            <div className="tutor-info-name"> {tutor.first_name}  {tutor.last_name} </div> 
@@ -119,7 +115,7 @@ class TutorDetails extends Component {
 const mapStateToProps = state => {
     return {
         tutorsId: state.tutors.id,
-        tutorDetails: state.tutors.tutors.filter(t => t.id === state.tutors.id)
+        tutorDetails: state.tutors.tutors.filter(t => t._id === state.tutors.id)
     }
 }
 

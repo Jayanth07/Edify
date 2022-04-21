@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Outlet, Link } from "react-router-dom" // Check '<Outlet>'
 import Header from '../components/header'
 import Footer from '../components/footer'
-import { connect } from 'react-redux'
+import { PATH } from './../constants/appConstants'
 
 export default class HomePage extends Component {
 
@@ -20,7 +20,7 @@ export default class HomePage extends Component {
 					<h1 class="fw-light">Learn yourselves a better tomorrow</h1>
 					<p class="lead">Teach and Learn</p>
 					<div class="button_box">
-						<Link to="/tutors"><a href="#" class="btn btn-lg btn-warning"><i class="bi bi-search" /> Search Tutors</a></Link>
+						<Link to={PATH.TUTORS}><a href="#" class="btn btn-lg btn-warning"><i class="bi bi-search" /> Search Tutors</a></Link>
 					</div>
 				</div>
 				</div>

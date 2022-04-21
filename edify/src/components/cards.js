@@ -17,10 +17,11 @@ class Cards extends Component {
     componentDidMount(){
         document.getElementById('filter').addEventListener('keydown', (e) => {
             if (e.keyCode === 13) {
-                console.log('Enter')
+                e.preventDefault();
                 this.filterTutors();
             }
         });
+        
         if (this.props.tutors === undefined || this.state.displayTutors === undefined) {
             console.log('props')
             console.log(this.props)
@@ -41,6 +42,7 @@ class Cards extends Component {
     }
 
     openDetails = (id) => {
+        console.log(`This is the id: ${id}`);
         this.props.selectTutor(id);
     }
 
@@ -98,8 +100,8 @@ class Cards extends Component {
                         </div>
                         <div class="buttons">
                             <button class="btn btn-outline-primary px-4">Message</button> 
-                            <Link to={`${tutor.id}`}>
-                                <button class="btn btn-warning px-4 ms-3 text-white" onClick={() => this.openDetails(tutor.id)}>Profile</button>
+                            <Link to={`${tutor._id}`}>
+                                <button class="btn btn-warning px-4 ms-3 text-white" onClick={() => this.openDetails(tutor._id)}>Profile</button>
                             </Link>    
                         </div>
                     </div>

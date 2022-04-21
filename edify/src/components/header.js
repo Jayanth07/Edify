@@ -5,6 +5,10 @@ import { PATH } from './../constants/appConstants'
 export default class Header extends Component {
 
     render() {
+        const noUnderline = {
+            textDecoration: 'none'
+        }
+
     return (
 		<div>
             <nav class="navbar navbar-expand-lg navbar-light bg-light shadow fixed-top">
@@ -17,7 +21,13 @@ export default class Header extends Component {
                 <div class="d-flex justify-contents-start text-left">
                     <ul class="navbar-nav ms-auto d-flex align-items-center">
                         <li class="nav-item active d-flex">
-                        <a className="nav-link" href="#">Home</a>
+                        <Link style={noUnderline} to={PATH.HOME}><a className="nav-link" href="#">Home</a></Link>
+                        </li>
+                        <li class="nav-item">
+                        <Link style={noUnderline} to={`/${PATH.TUTORS}`}><a className="nav-link" href="#">Tutors</a></Link>
+                        </li>
+                        <li class="nav-item">
+                        <Link style={noUnderline} to={`/${PATH.APPOINTMENTS}`}><a className="nav-link" href="#">Meetings</a></Link>
                         </li>
                         <li class="nav-item">
                         <a className="nav-link" href="#">About</a>
