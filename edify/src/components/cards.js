@@ -21,10 +21,8 @@ class Cards extends Component {
                 this.filterTutors();
             }
         });
-        
+
         if (this.props.tutors === undefined || this.state.displayTutors === undefined) {
-            console.log('props')
-            console.log(this.props)
             fetch('http://localhost:3000/tutors', {
                 headers : { 
                   'Content-Type': 'application/json',
@@ -42,7 +40,6 @@ class Cards extends Component {
     }
 
     openDetails = (id) => {
-        console.log(`This is the id: ${id}`);
         this.props.selectTutor(id);
     }
 
@@ -91,7 +88,11 @@ class Cards extends Component {
         <div class="row d-flex justify-content-center card-lay m-4" key={id}>
             <div class="col-md-7">
                 <div class="card p-3 py-4">
-                    <div class="text-center"> <img src={tutor.path} width="100" class="rounded profile-picture"/><br/> <b>Rating: </b>{tutor.rating} <i style={{color: '#ffb70b'}} class="bi bi-star-fill"></i></div>
+                    <div class="text-center"> <img src={tutor.path} width="100" class="rounded profile-picture"/>
+                        <br/>
+                        <b>Rating: </b>{tutor.rating} <i style={{color: '#ffb70b'}} class="bi bi-star-fill"></i>
+                        <br/> <b>Total Tutoring Hours: </b> 114.5
+                    </div>
                     <div class="text-center mt-3"> <span class="bg-secondary p-1 rounded text-white">1000+ Chats</span>&nbsp;<span class="bg-secondary p-1 rounded text-white">Certified</span>
                         <h5 class="mt-2 mb-0"><div className="tutor-info-name"> {tutor.first_name} {tutor.last_name} </div> </h5>
                         <div class="px-4 mt-1">
