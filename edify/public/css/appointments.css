@@ -1,0 +1,52 @@
+/* appointments */
+.appt_nme {
+    padding: 1.5rem 0 1rem 0rem;
+    color: var(--primary-color);
+    font-family: Comic Sans MS, Comic Sans, cursive;
+}
+
+.border_appt {
+    background-image: url(./../cal.jpg);
+    background-attachment: fixed;
+}
+
+.card_appt {
+    box-shadow: 10px 10px 5px rgb(209, 205, 205)
+}
+
+.card-text_appt {
+    color: rgb(108, 117, 125);
+    box-shadow: 10px 10px 5px rgb(209, 205, 205);
+    font-family: New Century Schoolbook, TeX Gyre Schola, serif;
+    font-size: 18px;
+}
+
+.card-title_appt {
+    font-family: New Century Schoolbook, TeX Gyre Schola, serif;
+}
+
+.course {
+    color: black;
+}
+
+.iconAppoint {
+    font-size: 20px;
+    color: #feb000;
+    margin-right: 10px;
+}
+
+.card {
+    border: none;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: .3s transform cubic-bezier(.155, 1.105, .295, 1.12),
+        .3s box-shadow,
+        .3s -webkit-transform cubic-bezier(.155, 1.105, .295, 1.12);
+    padding: 14px 80px 18px 36px;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, .12), 0 4px 8px rgba(0, 0, 0, .06);
+}
