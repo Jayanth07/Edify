@@ -7,6 +7,7 @@ import Cards from './components/cards';
 import TutorDetails from './components/tutorDetails';
 import { createBrowserHistory } from "history";
 import { PATH } from './constants/appConstants'
+import Appointments from './components/Appointments';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route exact path={PATH.HOME} element={<SearchTutors />}>
           <Route exact path={PATH.TUTORS} element={<Cards />} />
           <Route exact path={PATH.TUTOR_DETAILS} element={<TutorDetails />} />
+          <Route exact path={PATH.APPOINTMENTS} element={<Appointments />} />
         </Route>
       </Routes>
     </BrowserRouter>
