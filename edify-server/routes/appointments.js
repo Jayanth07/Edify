@@ -18,7 +18,7 @@ router.get('/:id', function(req, res) {
   collection.find({ _id: req.params.id }, function(err, appointments) {
     if (err)
      throw err;
-    res.json(appointment);
+    res.json(appointments);
   });
 });
 
@@ -26,17 +26,17 @@ router.post('/', function(req, res) {
   collection.insert({
     tutor_id: req.body.tutor_id,
     student_id: req.body.student_id,
-    start_date: req.body.start_date,
-    end_date: req.body.end_date,
+    start_date_time: req.body.start_date_time,
+    end_date_time: req.body.end_date_time,
     course: req.body.course,
     notes: req.body.notes,
     status: req.body.status,
-    student_name: req.body.student_name,
-    tutor_name: req.body.tutor_name
-  }, function(err, tutor) {
+    studentName: req.body.studentName,
+    tutorName: req.body.tutorName
+  }, function(err, appointments) {
     if (err)
      throw err;
-    res.json(appointment);
+    res.json(appointments);
   });
 });
 
@@ -48,26 +48,26 @@ router.put('/:id', function(req, res) {
       $set: {
         tutor_id: req.body.tutor_id,
         student_id: req.body.student_id,
-        start_date: req.body.start_date,
-        end_date: req.body.end_date,
+        start_date_time: req.body.start_date_time,
+        end_date_time: req.body.end_date_time,
         course: req.body.course,
         notes: req.body.notes,
         status: req.body.status,
-        student_name: req.body.student_name,
-        tutor_name: req.body.tutor_name
+        studentName: req.body.studentName,
+        tutorName: req.body.tutorName
       }
-  }, function(err, tutor) {
+  }, function(err, appointments) {
     if (err)
      throw err;
-    res.json(appointment);
+    res.json(appointments);
   });
 });
 
 router.delete('/:id', function(req, res) {
-  collection.remove({ _id: req.params.id }, function(err, tutor) {
+  collection.remove({ _id: req.params.id }, function(err, appointments) {
     if (err)
      throw err;
-    res.json(appointment);
+    res.json(appointments);
   });
 });
 
