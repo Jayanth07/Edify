@@ -10,7 +10,7 @@
     "email": "rkearey0@tamu.edu",
     "DOB": "11/16/2021",
     "certificates": ["Web Technologies", "Java"],
-    "path":"person1.jpg"
+    "path":"../person1.jpg"
   }, {
     "id": 2,
     "first_name": "Ysabel",

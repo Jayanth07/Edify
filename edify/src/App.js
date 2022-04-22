@@ -14,11 +14,10 @@ function App() {
     <BrowserRouter history={createBrowserHistory()}>
       <Routes>
         <Route index element={<HomePage />} />
-        <Route exact path={PATH.HOME} element={<SearchTutors />}>
-          <Route exact path={PATH.TUTORS} element={<Cards />} />
-          <Route exact path={PATH.TUTOR_DETAILS} element={<TutorDetails />} />
-          <Route exact path={PATH.APPOINTMENTS} element={<Appointments />} />
-        </Route>
+        <Route exact path={PATH.HOME} element={<SearchTutors />} />
+        <Route exact path={PATH.TUTORS} element={<Cards />} />
+        <Route exact path={PATH.TUTOR_DETAILS} element={<TutorDetails />} />
+        <Route exact path={PATH.APPOINTMENTS} element={<Appointments />} />
       </Routes>
     </BrowserRouter>
   );
