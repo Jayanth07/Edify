@@ -4,10 +4,10 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HomePage from './pages/Home';
 import SearchTutors from './pages/SearchTutors';
 import Cards from './components/cards';
-import Appointments from './components/appointments';
 import TutorDetails from './components/tutorDetails';
 import { createBrowserHistory } from "history";
 import { PATH } from './constants/appConstants'
+import Appointments from './components/Appointments';
 
 function App() {
   return (

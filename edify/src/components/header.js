@@ -10,7 +10,7 @@ export default class Header extends Component {
         }
 
     return (
-		<div>
+		<div style={{ marginBottom: '75px', marginLeft: 'auto', marginRight: 'auto' }}>
             <nav class="navbar navbar-expand-lg navbar-light bg-light shadow fixed-top">
             <div class="container">
             <Link to={PATH.HOME}><a className="navbar-brand" href="#"><img id="logo" src="./../../logo_name.png" /></a></Link>

@@ -4,7 +4,6 @@ import { selectTutor } from '../redux/actions'
 import { Link } from "react-router-dom"
 import { PATH } from './../constants/appConstants'
 import { setTutors } from '../redux/actions'
-
 import Header from '../components/header'
 import Footer from '../components/footer'
 
@@ -72,9 +71,7 @@ class Cards extends Component {
         console.log(this.state)
     return (
     <div >
-        <div class='mb-10'>
-            <Header />
-        </div>
+        <Header />
 
         <div class="col-5 text-center" style={{ marginTop: '75px', marginLeft: 'auto', marginRight: 'auto' }}>
             <form class="d-flex align-items-center">
@@ -88,7 +85,7 @@ class Cards extends Component {
         <div class="row d-flex justify-content-center card-lay m-4" key={id}>
             <div class="col-md-7">
                 <div class="card p-3 py-4">
-                    <div class="text-center"> <img src={tutor.path} width="100" class="rounded profile-picture"/>
+                    <div class="text-center"> <img src={`../${tutor.path}`} width="100" class="rounded profile-picture"/>
                         <br/>
                         <b>Rating: </b>{tutor.rating} <i style={{color: '#ffb70b'}} class="bi bi-star-fill"></i>
                         <br/> <b>Total Tutoring Hours: </b> 114.5
