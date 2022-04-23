@@ -1,7 +1,8 @@
 [{
 	"tutor_id":1,
 	"student_id":1,
-    "student_name":"Adam",
+    "studentName":"Adam",
+	"tutorName": "Reinold Kearey",
 	"start_date_time":"08:00AM 04/05/2022",
 	"end_date_time":"10:00AM 04/05/2022",
 	"course":"Java",
@@ -11,7 +12,8 @@
 {
 	"tutor_id":1,
 	"student_id":1,
-     "student_name":"Adam",
+	"studentName":"Adam",
+	"tutorName": "Reinold Kearey",
 	"start_date_time":"08:00AM 04/05/2022",
 	"end_date_time":"10:00AM 04/05/2022",
 	"course":"Java",
@@ -21,17 +23,8 @@
 {
 	"tutor_id":1,
 	"student_id":1,
-     "student_name":"Adam",
-"start_date_time":"08:00AM 04/05/2022",
-	"end_date_time":"10:00AM 04/05/2022",
-	"course":"Java",
-	"notes":"Teach me classes and functions",
-	"status":"CANCELLED"
-},
-{
-	"tutor_id":1,
-	"student_id":1,
-     "student_name":"Adam",
+	"studentName":"Adam",
+	"tutorName": "Reinold Kearey",
 	"start_date_time":"08:00AM 04/05/2022",
 	"end_date_time":"10:00AM 04/05/2022",
 	"course":"Java",
@@ -41,7 +34,8 @@
 {
 	"tutor_id":1,
 	"student_id":1,
-     "student_name":"Adam",
+	"studentName":"Adam",
+	"tutorName": "Reinold Kearey",
 	"start_date_time":"08:00AM 04/05/2022",
 	"end_date_time":"10:00AM 04/05/2022",
 	"course":"Java",
@@ -51,7 +45,8 @@
 {
 	"tutor_id":1,
 	"student_id":1,
-     "student_name":"Adam",
+	"studentName":"Adam",
+	"tutorName": "Reinold Kearey",
 	"start_date_time":"08:00AM 04/05/2022",
 	"end_date_time":"10:00AM 04/05/2022",
 	"course":"Java",
@@ -61,8 +56,20 @@
 {
 	"tutor_id":1,
 	"student_id":1,
-     "student_name":"Adam",
-"start_date_time":"08:00AM 04/05/2022",
+	"studentName":"Adam",
+	"tutorName": "Reinold Kearey",
+	"start_date_time":"08:00AM 04/05/2022",
+	"end_date_time":"10:00AM 04/05/2022",
+	"course":"Java",
+	"notes":"Teach me classes and functions",
+	"status":"CANCELLED"
+},
+{
+	"tutor_id":1,
+	"student_id":1,
+	"studentName":"Adam",
+	"tutorName": "Reinold Kearey",
+	"start_date_time":"08:00AM 04/05/2022",
 	"end_date_time":"10:00AM 04/05/2022",
 	"course":"Java",
 	"notes":"Teach me classes and functions",

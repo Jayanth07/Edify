@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { selectTutor } from '../redux/actions'
-import { useParams } from 'react-router-dom'
+import { Navigate } from 'react-router-dom'
 import Header from '../components/header'
 import Footer from '../components/footer'
 
@@ -125,4 +125,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(TutorDetails);
+export default connect(mapStateToProps, mapDispatchToProps)((TutorDetails));

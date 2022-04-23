@@ -2,7 +2,7 @@
 .appt_nme {
     padding: 1.5rem 0 1rem 0rem;
     color: var(--primary-color);
-    font-family: Comic Sans MS, Comic Sans, cursive;
+    font-family: New Century Schoolbook, TeX Gyre Schola, serif;
 }
 
 .border_appt {
