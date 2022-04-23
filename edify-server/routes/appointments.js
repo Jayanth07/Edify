@@ -10,6 +10,12 @@ router.get('/', function(req, res) {
   collection.find({}, function(err, appointments) {
     if (err)
      throw err;
+    
+    // Sort appointments based on start time
+    appointments.sort(function(a,b){
+      return new Date(a.start_date_time) - new Date(b.start_date_time);
+    });
+
     res.json(appointments);
   });
 });
@@ -23,6 +29,29 @@ router.get('/:id', function(req, res) {
 });
 
 router.post('/', function(req, res) {
+
+  const { tutor_id, student_id, start_date_time, end_date_time, course, notes, status, studentName, tutorName } = req.body;
+
+  if (!(tutor_id && student_id && start_date_time && end_date_time && course && notes && status && studentName && tutorName)) {
+    res.send('All fields are required!')
+  }
+
+  collection.find({ tutor_id: req.body.tutor_id }, function(err, appointments) {
+    if (err) {
+      throw err;
+    }
+
+    const startDate = new Date(start_date_time);
+    const endDate = new Date(end_date_time);
+
+    appointments.forEach(app => {
+      if ((startDate >= new Date(app.start_date_time) && startDate < new Date(app.end_date_time)) ||
+      (startDate <= new Date(app.start_date_time) && endDate > new Date(app.start_date_time))) {
+        res.send('It overlaps with other appointments of the tutor')
+      }
+    });
+  })
+
   collection.insert({
     tutor_id: req.body.tutor_id,
     student_id: req.body.student_id,
@@ -42,6 +71,29 @@ router.post('/', function(req, res) {
 
 
 router.put('/:id', function(req, res) {
+
+  const { tutor_id, student_id, start_date_time, end_date_time, course, notes, status, studentName, tutorName } = req.body;
+
+  if (!(tutor_id && student_id && start_date_time && end_date_time && course && notes && status && studentName && tutorName)) {
+    res.send('All fields are required!')
+  }
+
+  collection.find({ tutor_id: req.body.tutor_id }, function(err, appointments) {
+    if (err) {
+      throw err;
+    }
+
+    const startDate = new Date(start_date_time);
+    const endDate = new Date(end_date_time);
+
+    appointments.forEach(app => {
+      if ((startDate >= new Date(app.start_date_time) && startDate < new Date(app.end_date_time)) ||
+      (startDate <= new Date(app.start_date_time) && endDate > new Date(app.start_date_time))) {
+        res.send('It overlaps with other appointments of the tutor')
+      }
+    });
+  })
+
   collection.update({
       _id: req.params.id
   }, {

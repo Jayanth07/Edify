@@ -23,6 +23,22 @@ router.get('/:id', function(req, res) {
 });
 
 router.post('/', function(req, res) {
+
+  const { first_name, last_name, bio, courses, location, rating, phone_number, email, DOB, certificates, path } = req.body;
+
+  if (!(first_name && last_name && bio && courses && location && rating && phone_number && email && DOB && certificates && path)) {
+    res.send('All fields are required!')
+  }
+
+  collection.find({email: email}, function(err, tutor) {
+    if (err)
+      throw err;
+
+    if (tutor) {
+      res.send('An account for this email already exists, please login!')
+    }
+  })
+
     collection.insert({
         first_name: req.body.first_name,
         last_name: req.body.last_name,
@@ -44,6 +60,13 @@ router.post('/', function(req, res) {
 
 
   router.put('/:id', function(req, res) {
+    
+  const { first_name, last_name, bio, courses, location, rating, phone_number, email, DOB, certificates, path } = req.body;
+
+  if (!(first_name && last_name && bio && courses && location && rating && phone_number && email && DOB && certificates && path)) {
+    res.send('All fields are required!')
+  }
+
     collection.update({
         _id: req.params.id
     }, {

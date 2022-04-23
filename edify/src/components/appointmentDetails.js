@@ -19,7 +19,6 @@ useEffect(() => {
 		.then(res => res.json())
 		.then((data) => {
 			setAppointmentDetails(data)
-			console.log(data)
 		})
 		.catch(console.log)
 }, []);
@@ -31,7 +30,12 @@ useEffect(() => {
         
         <div className="container p-4" style={{ backgroundColor: 'rgba(255, 255, 255, 0.85)', borderRadius: '15px'}}> 
         
-        { appointmentDetails && appointmentDetails.map((appointment, id) => (
+        { appointmentDetails && appointmentDetails.map((appointment, id) => {
+
+            const startDate = new Date(appointment.start_date_time);
+            const endDate = new Date(appointment.end_date_time);
+            
+            return (
             <div className="container">
             <div className="row">
                 <div className="col-md-5">
@@ -43,10 +47,14 @@ useEffect(() => {
                     {/* <!-- / project-info-box --> */}
         
                     <div className="project-info-box">
+                        <p><div class="row">
+                            <div class="col-3"><b>Status: </b></div>
+                            <div class="col-6 status"><span className={appointment.status == 'SCHEDULED' ? 'active' : 'waiting'}>{appointment.status}</span></div>
+                        </div></p>
                         <p><b>Tutor:</b> {appointment.tutorName}</p>
                         <p><b>Student:</b> {appointment.studentName}</p>
-                        <p><b>Date:</b> 14.02.2020</p>
-                        <p><b>Duration:</b> 1 hour</p>
+                        <p><b>Date:</b> {startDate.toDateString()}</p>
+                        <p><b>Time:</b> {`${startDate.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })} - ${endDate.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })}`}</p>
                         <p className="mb-0"><b>Course:</b> {appointment.course}</p>
                     </div>
                     {/* <!-- / project-info-box --> */}
@@ -58,7 +66,7 @@ useEffect(() => {
                 </div>
             </div>
         </div>           
-        ))}
+        )})}
         </div>
         <Footer />
       </div>

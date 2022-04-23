@@ -73,8 +73,12 @@ class TutorDetails extends Component {
                <div className="courses">Courses
                  <div className="course-details">{tutor.courses.map( (course,id) => (<div key={id} className="course-details-text">{course}</div>))}</div>
                </div>
-               <h4 >About me</h4>
-               <div>{tutor.bio}
+               <div className="courses">About me
+                 <div className="course-details" style={{color: 'black'}}>{tutor.bio}</div>
+               </div>
+               
+               <div className="courses">Total Tutoring Hours
+                 <div className="course-details" style={{color: 'black'}}>{tutor.totalTutoringHours}</div>
                </div>
 
                <div className="education">

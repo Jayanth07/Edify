@@ -88,7 +88,7 @@ class Cards extends Component {
                     <div class="text-center"> <img src={`../${tutor.path}`} width="100" class="rounded profile-picture"/>
                         <br/>
                         <b>Rating: </b>{tutor.rating} <i style={{color: '#ffb70b'}} class="bi bi-star-fill"></i>
-                        <br/> <b>Total Tutoring Hours: </b> 114.5
+                        <br/> <b>Total Tutoring Hours: </b> {tutor.totalTutoringHours}
                     </div>
                     <div class="text-center mt-3"> <span class="bg-secondary p-1 rounded text-white">1000+ Chats</span>&nbsp;<span class="bg-secondary p-1 rounded text-white">Certified</span>
                         <h5 class="mt-2 mb-0"><div className="tutor-info-name"> {tutor.first_name} {tutor.last_name} </div> </h5>
