@@ -24,9 +24,17 @@ router.get('/:id', function(req, res) {
 
 router.post('/', function(req, res) {
     collection.insert({
-        title: req.body.title,
-        genre: req.body.genre,
-        description: req.body.desc
+        first_name: req.body.first_name,
+        last_name: req.body.last_name,
+        bio: req.body.bio,
+        courses: req.body.courses,
+        location: req.body.location,
+        rating: req.body.rating,
+        phone_number: req.body.phone_number,
+        email: req.body.email,
+        DOB: req.body.DOB,
+        certificates: req.body.certificates,
+        path: req.body.path
     }, function(err, tutor) {
       if (err)
        throw err;
@@ -40,9 +48,17 @@ router.post('/', function(req, res) {
         _id: req.params.id
     }, {
         $set: {
-            title: req.body.title,
-            genre: req.body.gere,
-            description: req.body.desc
+          first_name: req.body.first_name,
+          last_name: req.body.last_name,
+          bio: req.body.bio,
+          courses: req.body.courses,
+          location: req.body.location,
+          rating: req.body.rating,
+          phone_number: req.body.phone_number,
+          email: req.body.email,
+          DOB: req.body.DOB,
+          certificates: req.body.certificates,
+          path: req.body.path
         }
     }, function(err, tutor) {
       if (err)
