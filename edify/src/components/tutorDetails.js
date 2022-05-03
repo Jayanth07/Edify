@@ -86,24 +86,107 @@ class TutorDetails extends Component {
                      <div className="tutor-certi-details">
                         {tutor.certificates.map( (d,id) => (<div key={id}>{d}</div>))} 
                     </div>
-                 </div>
-
-              {/* <div className="student-feedback">
-                 <h3 className="student-feeback-name">Student feedback</h3>
-
-                 <div className="total-stars-container">
-                     <div className="rating-value"> 4.5
-                       </div>
-                       <div className='rating-stars'>
-                         <span className="fa fa-star checked"></span>
-                         <span className="fa fa-star checked"></span>
-                         <span className="fa fa-star checked"></span>
-                         <span className="fa fa-star checked"></span>
-                         <span className="fa fa-star checked"></span>
-                         </div>
-                 </div>
-               </div>   */}
                 </div>
+                
+              <br/>
+
+              <h3 className="courses">Student feedback</h3>
+
+              <div className="container">
+              <div class="row">
+                <div class="col-sm">
+                  <div class="rating-block">
+                    <h4>Average rating:</h4>
+                    <h3>4.3 <small>/ 5</small></h3>
+                    <div class="ratings">
+                      <div>
+                        <i class="fa fa-star rating-color"></i>
+                        <i class="fa fa-star rating-color"></i>
+                        <i class="fa fa-star rating-color"></i>
+                        <i class="fa fa-star rating-color"></i>
+                        <i class="fa fa-star"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-sm">
+                  <hr/>
+                  <div class="review-block">
+                    <div class="row">
+                      <div class="col-sm">
+                        <img src="../profile_pic.webp" class="img-rounded" style={{width: 60, height: 60}}/>
+                        <div class="review-block-name"></div>
+                        <div class="review-block-date">January 29, 2016</div>
+                      </div>
+                      <div class="col-sm-9">
+                        <div class="ratings">
+                            <i class="fa fa-star rating-color"></i>
+                            <i class="fa fa-star rating-color"></i>
+                            <i class="fa fa-star rating-color"></i>
+                            <i class="fa fa-star rating-color"></i>
+                            <i class="fa fa-star"></i>
+                        </div>
+                        <div class="review-block-title">Tylor Smith</div>
+                        <div class="review-block-description">this was nice in buy. this was nice in buy. this was nice in buy. this was nice in buy this was nice in buy this was nice in buy this was nice in buy this was nice in buy</div>
+                      </div>
+                    </div>
+                    <hr/>
+                    <div class="row">
+                      <div class="col-sm-3">
+                        <img src="../profile_pic.webp" class="img-rounded" style={{width: 60, height: 60}}/>
+                        <div class="review-block-name"></div>
+                        <div class="review-block-date">January 29, 2016</div>
+                      </div>
+                      <div class="col-sm-9">
+                      <div class="ratings">
+                          <i class="fa fa-star rating-color"></i>
+                          <i class="fa fa-star rating-color"></i>
+                          <i class="fa fa-star rating-color"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                      </div>
+                        <div class="review-block-title">Student Name</div>
+                        <div class="review-block-description">this was nice in buy. this was nice in buy. this was nice in buy. this was nice in buy this was nice in buy this was nice in buy this was nice in buy this was nice in buy</div>
+                      </div>
+                    </div>
+                    <hr/>
+                  <div class="row">
+                      <div class="col-sm-3">
+                        <img src="../profile_pic.webp" class="img-rounded" style={{width: 60, height: 60}}/>
+                        <div class="review-block-name"></div>
+                      </div>
+                      <div class="col-sm-9">
+                      <div class="rating">
+                        <input type="radio" name="rating" value="5" id="5"/><label for="5">☆</label> <input type="radio" name="rating" value="4" id="4"/><label for="4">☆</label> <input type="radio" name="rating" value="3" id="3"/><label for="3">☆</label> <input type="radio" name="rating" value="2" id="2"/><label for="2">☆</label> <input type="radio" name="rating" value="1" id="1"/><label for="1">☆</label>
+                        <br/>
+                      </div>
+
+
+                      {/* <div class="ratings">
+                          <i class="fa fa-star rating-color"></i>
+                          <i class="fa fa-star rating-color"></i>
+                          <i class="fa fa-star rating-color"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                      </div> */}
+                        <div class="comment-area">
+                          <textarea class="form-control" placeholder="Add your comment here" rows="4"></textarea>
+                          <div class="row-6 text-right">
+                            <div class="pull-right" style={{ marginTop: '10px'}}> <button class="btn btn-warning send btn-sm">Comment </button> </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+		
+
+              </div>  
+            </div>
         </div>
         ))}
         </div>
