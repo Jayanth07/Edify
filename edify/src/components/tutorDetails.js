@@ -22,14 +22,14 @@ class TutorDetails extends Component {
            <div className="col-sm-4">
               <img className="img-fluid tutor-info-img" src={`../${tutor.path}`} alt="error" width="312" height="638"/>  
                <div className="tutor-info-details">
-                 <div className="tutor-info-details-text">
-                              <div className="icon">
+                 {/* <div className="tutor-info-details-text">
+                        <div className="icon">
 								        	 <i className="bi bi-star-fill"></i>
 								        </div>
                         <div className="info">
                           {tutor.rating} Tutor rating
-                          </div>
-                          </div>
+                        </div>
+                      </div> */}
 
                       <div className="tutor-info-details-text">
                               <div className="icon">
@@ -84,7 +84,7 @@ class TutorDetails extends Component {
                <div className="education">
                   <h5 className="tutor-certifications">Certifications</h5>
                      <div className="tutor-certi-details">
-                        {tutor.certificates.map( (d,id) => (<div key={id}>{d}</div>))} 
+                        {tutor.certificates.map((d,id) => (<div key={id}>{d}</div>))} 
                     </div>
                 </div>
                 
@@ -97,14 +97,14 @@ class TutorDetails extends Component {
                 <div class="col-sm">
                   <div class="rating-block">
                     <h4>Average rating:</h4>
-                    <h3>4.3 <small>/ 5</small></h3>
+                    <h3>{tutor.rating} <small>/ 5</small></h3>
                     <div class="ratings">
                       <div>
-                        <i class="fa fa-star rating-color"></i>
-                        <i class="fa fa-star rating-color"></i>
-                        <i class="fa fa-star rating-color"></i>
-                        <i class="fa fa-star rating-color"></i>
-                        <i class="fa fa-star"></i>
+                        <i class={`fa fa-star ${tutor.rating >=1 ? 'rating-color' : ''}`}></i>
+                        <i class={`fa fa-star ${tutor.rating >=2 ? 'rating-color' : ''}`}></i>
+                        <i class={`fa fa-star ${tutor.rating >=3 ? 'rating-color' : ''}`}></i>
+                        <i class={`fa fa-star ${tutor.rating >=4 ? 'rating-color' : ''}`}></i>
+                        <i class={`fa fa-star ${tutor.rating ==5 ? 'rating-color' : ''}`}></i>
                       </div>
                     </div>
                   </div>
@@ -163,15 +163,6 @@ class TutorDetails extends Component {
                         <input type="radio" name="rating" value="5" id="5"/><label for="5">☆</label> <input type="radio" name="rating" value="4" id="4"/><label for="4">☆</label> <input type="radio" name="rating" value="3" id="3"/><label for="3">☆</label> <input type="radio" name="rating" value="2" id="2"/><label for="2">☆</label> <input type="radio" name="rating" value="1" id="1"/><label for="1">☆</label>
                         <br/>
                       </div>
-
-
-                      {/* <div class="ratings">
-                          <i class="fa fa-star rating-color"></i>
-                          <i class="fa fa-star rating-color"></i>
-                          <i class="fa fa-star rating-color"></i>
-                          <i class="fa fa-star"></i>
-                          <i class="fa fa-star"></i>
-                      </div> */}
                         <div class="comment-area">
                           <textarea class="form-control" placeholder="Add your comment here" rows="4"></textarea>
                           <div class="row-6 text-right">
