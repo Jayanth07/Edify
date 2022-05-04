@@ -90,7 +90,42 @@ class TutorDetails extends Component {
                 
               <br/>
 
-              <h3 className="courses">Student feedback</h3>
+              <h3 className="courses">Appointments</h3>
+
+              <div class="rating-block">
+                <div class="row">
+
+                  <div class="col-sm">
+                      <h4>Start date:</h4>
+                      <input className='rounded' type="date" id="start" name="trip-start" value="2022-05-12"></input>
+                  </div>
+                  
+                  <div class="col-sm">
+                    <h4>Time Slot: </h4>
+                    <select class="form-select" aria-label="Default select example">
+                      <option value="0">8 AM - 9 AM</option>
+                      <option value="1">9 AM - 10 AM</option>
+                      <option value="2">10 AM - 11 AM</option>
+                      <option value="3">11 AM - 12 PM</option>
+                      <option value="4">12 AM - 1 PM</option>
+                      <option value="5">1 PM - 2 PM</option>
+                      <option value="6">2 PM - 3 PM</option>
+                      <option value="7">3 PM - 4 PM</option>
+                      <option value="8">4 PM - 5 PM</option>
+                    </select>
+                  </div>
+
+                  <div class="col-sm">
+                    <h4>Confirm: </h4>
+                    <button type="button" class="btn btn-warning">Book</button>
+                  </div>
+
+                  <br/>
+                </div>
+              </div>
+
+
+              <h3 className="courses mt-2">Student feedback</h3>
 
               <div className="container">
               <div class="row">
