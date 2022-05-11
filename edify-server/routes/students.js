@@ -20,8 +20,43 @@ router.get("/:id", function (req, res) {
   });
 });
 
+//adding favourites
+router.put("/favourites", function (req, res) {
+  const { student_id, tutor_id } = req.body;
+
+  if (!(student_id && tutor_id)) {
+    res.send(" Required fields are missing!");
+    res.status(400);
+  } else {
+    collection.findOne({ _id: student_id }, function (err, student) {
+      if (err) throw err;
+      console.log(student);
+      if (!student) {
+        res.send("There is no student with the given id, please check!");
+        res.status(400);
+      } else {
+        collection.update(
+          {
+            _id: student_id,
+          },
+          {
+            $push: {
+              favourite_tutors: tutor_id,
+            },
+          },
+          function (err, student) {
+            if (err) throw err;
+            res.json(student);
+          }
+        );
+      }
+    });
+  }
+});
+
 router.post("/", function (req, res) {
-  const { first_name, last_name, bio, mobile, email } = req.body;
+  const { first_name, last_name, bio, mobile, email, favourite_tutors } =
+    req.body;
 
   if (!(first_name && last_name && bio && mobile && email)) {
     res.send("All fields are required!");
@@ -42,6 +77,7 @@ router.post("/", function (req, res) {
             mobile: req.body.mobile,
             email: req.body.email,
             totalTutoringHours: 0,
+            favourite_tutors: req.body.favourite_tutors,
           },
           function (err, student) {
             if (err) throw err;
