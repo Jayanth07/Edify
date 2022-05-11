@@ -1,0 +1,42 @@
+.login {
+    /* Add shadows to create the "card" effect */
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+    padding: 28px !important;
+    width: 55% !important;
+
+}
+
+.submit {
+    background-color: orange;
+
+}
+
+.err {
+    font-size: small;
+    color: red;
+}
+
+.asterisk {
+    font-size: small;
+    color: red;
+}
+
+[aria-hidden="true"] {
+    display: none;
+}
+
+.form-1 {
+    padding: 15px,  !important;
+}
+
+.user-info-name {
+    padding-bottom: 20px;
+    font-style: italic;
+}
+
+.user-info-name-txt {
+    font-weight: bold;
+    color: var(--primary-color);
+
+}
