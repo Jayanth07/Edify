@@ -27,8 +27,6 @@ router.post('/', function(req, res) {
 
   const { rating, comment, token, tutor_id } = req.body;
 
-
-
   if (!(rating && comment && token && tutor_id)) {
     res.send('All fields are required!')
     res.status(400);
@@ -39,16 +37,18 @@ router.post('/', function(req, res) {
     let email=token_obj.email;
     let user_type=token_obj.user_type;
     let student_id=token_obj.person_id;
-    collection.find({tutor_id: tutor_id}, function(err, feedback) {
+    collection.findOne({tutor_id: tutor_id}, function(err, feedback) {
       if (err)
         throw err;
-  
-      if (feedback) {
-        feedback.comments=feedback.comments.push({"student_id": student_id , "rating": rating, "comment": comment});
+      console.log("It's here");
+      if (feedback && feedback.length!=0) {
+      console.log("It's here too");
+      feedback.comments.push({"student_id": student_id , "rating": rating, "comment": comment});
+      console.log(feedback);
         collection.update({_id:feedback._id},
           {$set: {
           count: feedback.count+1,
-          avg_rating: (feedback.avg_rating*feedback.count+feedback.rating)/(feedback.count+1),
+          avg_rating: (feedback.avg_rating*feedback.count+rating)/(feedback.count+1),
           comments: feedback.comments
         }
         }, function(err, feedback) {

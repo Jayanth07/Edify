@@ -50,20 +50,52 @@ router.post('/register', (req, res) => {
           if (err3) throw err3;
           let user_id=user._id;
           if(user_type=="student"){
-            let studentDocument=user;
-            delete(studentDocument['password'])
-            delete(studentDocument['_id'])
+            let studentDocument = {};
+            studentDocument.email=user.email;
+            studentDocument.user_id=user_id;
 
             studentDocument.bio=bio;
             studentDocument.phone_number=phone_number;
             studentDocument.first_name=first_name;
             studentDocument.last_name=last_name;
 
-            studentCollection.insert(studentDocument, function(err2, student){
-              if (err2) throw err2;
-              user.debug="Here man!!";
-              person_id=student._id;
-            });
+
+            studentCollection.insert(studentDocument, (err2, student) => {
+              if (err2) {
+                console.log(`Inside insert`)
+
+                throw err2;
+              }
+
+              studentCollection.findOne({email: user.email}, function(err4, student) {
+              console.log('Inside get tutor')
+              person_id = student._id
+              user.person_id=person_id;
+              console.log(`The id is ${person_id}`);
+
+              collection.update({
+                    email: user.email
+                }, {
+                    $set: {
+                      email: user.email,
+                      person_id: person_id
+                    }
+                }, function(err, user) {
+                  if (err)
+                  throw err;
+                });
+              var token = jwt.sign({user_id: user_id, person_id: user.person_id, email, user_type:user_type}, 'secretkey');
+
+              if (token) {
+                user.token = token;
+              }
+
+              delete(user['password']);
+              delete(user['_id']);
+
+              res.json(user);
+            })
+          });
           }else{
             let tutorDocument = {};
             tutorDocument.email=user.email;
@@ -75,7 +107,6 @@ router.post('/register', (req, res) => {
             tutorDocument.first_name=first_name;
             tutorDocument.last_name=last_name;
 
-            user.debug="Here jay man!!";
 
             tutorCollection.insert(tutorDocument, (err1, tutor) => {
               if (err1) {
@@ -88,7 +119,20 @@ router.post('/register', (req, res) => {
               console.log('Inside get tutor')
               person_id = tutor._id
               user.person_id=person_id;
-              console.log(`The id is ${person_id}`)
+              console.log(`The id is ${person_id}`);
+
+              collection.update({
+                    email: user.email
+                }, {
+                    $set: {
+                      email: user.email,
+                      person_id: person_id
+                    }
+                }, function(err, user) {
+                  if (err)
+                  throw err;
+                });
+                
               var token = jwt.sign({user_id: user_id, person_id: user.person_id, email, user_type:user_type}, 'secretkey');
 
               if (token) {
