@@ -18,6 +18,7 @@ class SignUp extends Component {
         imageFile: null,
         courses: [],
         user: "",
+        bio: "",
       },
       formErrors: {
         firstname: "",
@@ -197,7 +198,7 @@ class SignUp extends Component {
     const data = {
       first_name: form.firstname,
       last_name: form.lastname,
-      bio: form.bio,
+      bio: form.textarea,
       mobile: form.mobile,
       email: form.email,
       favourite_tutors: [1, 2],
