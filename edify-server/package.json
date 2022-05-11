@@ -17,5 +17,8 @@
     "monk": "^7.3.4",
     "morgan": "~1.9.1",
     "nodemon": "^2.0.15"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.12"
   }
 }

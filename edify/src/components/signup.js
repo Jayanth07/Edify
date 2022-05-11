@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import Header from '../components/header'
-import Footer from '../components/footer'
+import Header from "../components/header";
+import Footer from "../components/footer";
+import axios from "axios";
 
 class SignUp extends Component {
   constructor() {
@@ -31,6 +32,18 @@ class SignUp extends Component {
       },
     };
   }
+
+  // componentDidMount() {
+  //   // Simple POST request with a JSON body using fetch
+  //   const requestOptions = {
+  //     method: "POST",
+  //     headers: { "Content-Type": "application/json" },
+  //     body: JSON.stringify({ title: "React POST Request Example" }),
+  //   };
+  //   fetch("http://localhost:3000/students/", requestOptions)
+  //     .then((response) => response.json())
+  //     .then((data) => this.setState({ postId: data.id }));
+  // }
 
   //   Validations of the form
 
@@ -120,7 +133,8 @@ class SignUp extends Component {
             value
           )
         )
-          errorMessage = "The password field should contain at least six characters, one uppercase letter, one number and one special character (!,@,#,$,%,^,&,*,+).";
+          errorMessage =
+            "The password field should contain at least six characters, one uppercase letter, one number and one special character (!,@,#,$,%,^,&,*,+).";
         else if (refValue && value !== refValue)
           errorMessage = "Password and Confirm Password does not match.";
         break;
@@ -178,6 +192,25 @@ class SignUp extends Component {
     }
     console.log("Courses:", form.courses);
     console.log("Data: ", form);
+
+    const base_url = "http://localhost:3000/students/";
+    const data = {
+      first_name: form.firstname,
+      last_name: form.lastname,
+      bio: form.bio,
+      mobile: form.mobile,
+      email: form.email,
+      favourite_tutors: [1, 2],
+    };
+    axios
+      .post(base_url, data)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error.response);
+      });
+    console.log(JSON.stringify(data));
   };
 
   formValidation = (form, formErrors, validationsFunction) => {
@@ -208,15 +241,18 @@ class SignUp extends Component {
     const { form, formErrors } = this.state;
     return (
       <div>
-      <Header/>
+        <Header />
         <div class="container">
           <div class="row d-flex justify-content-center align-items-center mt-5">
             <div class="p-sm-5">
               <div class="row d-flex justify-content-center order-2 pd-3">
-                <div class=" login col-sm-5" style={{
-            backgroundColor: "rgba(255, 255, 255, 0.85)",
-            borderRadius: "15px",
-          }}>
+                <div
+                  class=" login col-sm-5"
+                  style={{
+                    backgroundColor: "rgba(255, 255, 255, 0.85)",
+                    borderRadius: "15px",
+                  }}
+                >
                   <h3>SignUp</h3>
 
                   <div className="col-md-6">
@@ -313,7 +349,9 @@ class SignUp extends Component {
                         type="button"
                         className="btn btn-warning btn-sm m-1 submit"
                         onClick={this.handleSubmit}
-                      >Submit</button>
+                      >
+                        Submit
+                      </button>
                     </div>
                   </div>
 
@@ -435,7 +473,7 @@ class SignUp extends Component {
             </div>
           </div>
         </div>
-        <Footer/>
+        <Footer />
       </div>
     );
   }
