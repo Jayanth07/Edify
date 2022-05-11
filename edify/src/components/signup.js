@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import Header from '../components/header'
+import Footer from '../components/footer'
 
 class SignUp extends Component {
   constructor() {
@@ -113,6 +115,12 @@ class SignUp extends Component {
       case "password":
         // refValue is the value of Confirm Password field
         if (!value) errorMessage = "Please enter Password.";
+        else if (
+          !/^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*+])[a-zA-Z0-9!@#$%^&*+]{6,}$/.test(
+            value
+          )
+        )
+          errorMessage = "The password field should contain at least six characters, one uppercase letter, one number and one special character (!,@,#,$,%,^,&,*,+).";
         else if (refValue && value !== refValue)
           errorMessage = "Password and Confirm Password does not match.";
         break;
@@ -199,17 +207,21 @@ class SignUp extends Component {
   render() {
     const { form, formErrors } = this.state;
     return (
-      <>
+      <div>
+      <Header/>
         <div class="container">
           <div class="row d-flex justify-content-center align-items-center mt-5">
             <div class="p-sm-5">
               <div class="row d-flex justify-content-center order-2 pd-3">
-                <div class=" login col-sm-5">
+                <div class=" login col-sm-5" style={{
+            backgroundColor: "rgba(255, 255, 255, 0.85)",
+            borderRadius: "15px",
+          }}>
                   <h3>SignUp</h3>
 
                   <div className="col-md-6">
                     <div className="form-group">
-                      <i class="bi bi-person-fill me-3 icon"></i>
+                      <i class="bi bi-person-fill me-3 icon iconAppoint"></i>
                       <label>
                         First Name:<span className="asterisk">*</span>
                       </label>
@@ -227,7 +239,7 @@ class SignUp extends Component {
                     </div>
 
                     <div className="form-group">
-                      <i class="bi bi-envelope-fill me-3 icon"></i>
+                      <i class="bi bi-envelope-fill me-3 icon iconAppoint"></i>
                       <label>
                         Email:<span className="asterisk">*</span>
                       </label>
@@ -245,7 +257,7 @@ class SignUp extends Component {
                     </div>
 
                     <div className="form-group">
-                      <i class="bi bi-key-fill me-3 icon"></i>
+                      <i class="bi bi-key-fill me-3 icon iconAppoint"></i>
                       <label>
                         Password:<span className="asterisk">*</span>
                       </label>
@@ -280,7 +292,7 @@ class SignUp extends Component {
                     {/* //image code */}
                     <div aria-hidden={form.user !== "tutor" ? true : false}>
                       <div className="form-group">
-                        <p className="title">Upload Image:</p>
+                        <p className="title">Upload Profile Picture:</p>
                         <div style={{ marginBottom: 10 }}>
                           <input
                             type="file"
@@ -297,12 +309,11 @@ class SignUp extends Component {
 
                     {/* submit */}
                     <div className="form-group ">
-                      <input
+                      <button
                         type="button"
-                        className="btn submit"
-                        value="Submit"
+                        className="btn btn-warning btn-sm m-1 submit"
                         onClick={this.handleSubmit}
-                      />
+                      >Submit</button>
                     </div>
                   </div>
 
@@ -310,7 +321,7 @@ class SignUp extends Component {
                   <div className="col-md-6">
                     {/* Last Name */}
                     <div className="form-group">
-                      <i class="bi bi-person-fill me-3 icon"></i>
+                      <i class="bi bi-person-fill me-3 icon iconAppoint"></i>
                       <label>
                         Last Name:<span className="asterisk">*</span>
                       </label>
@@ -328,7 +339,7 @@ class SignUp extends Component {
                     </div>
 
                     <div className="form-group">
-                      <i class="bi bi-telephone-fill me-3 icon"></i>
+                      <i class="bi bi-telephone-fill me-3 icon iconAppoint"></i>
                       <label>
                         Mobile:<span className="asterisk">*</span>
                       </label>
@@ -348,7 +359,7 @@ class SignUp extends Component {
 
                     {/* confirm password */}
                     <div className="form-group">
-                      <i class="bi bi-key-fill me-3 icon"></i>
+                      <i class="bi bi-key-fill me-3 icon iconAppoint"></i>
                       <label>
                         Confirm Password:<span className="asterisk">*</span>
                       </label>
@@ -424,7 +435,8 @@ class SignUp extends Component {
             </div>
           </div>
         </div>
-      </>
+        <Footer/>
+      </div>
     );
   }
 }

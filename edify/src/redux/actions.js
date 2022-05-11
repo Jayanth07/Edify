@@ -16,4 +16,14 @@ function setTutors(tutors) {
     }
 }
 
-export { selectTutor, setTutors }
+function setLoginState(token, userType) {
+    return {
+        type: 'LOGIN',
+        payload: {
+            token,
+            userType
+        }
+    }
+}
+
+export { selectTutor, setTutors, setLoginState }

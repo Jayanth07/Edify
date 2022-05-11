@@ -1,8 +1,14 @@
 import React, { Component } from 'react'
 import { Link } from "react-router-dom"
 import { PATH } from './../constants/appConstants'
+import { connect } from 'react-redux'
 
-export default class Header extends Component {
+class Header extends Component {
+
+    state = {
+        token: sessionStorage.getItem('token'),
+        userType: sessionStorage.getItem('userType')
+    }
 
     render() {
         const noUnderline = {
@@ -23,9 +29,9 @@ export default class Header extends Component {
                         <li class="nav-item active d-flex">
                         <Link style={noUnderline} to={PATH.HOME}><a className="nav-link" href="#">Home</a></Link>
                         </li>
-                        <li class="nav-item">
+                        {(this.state.userType !== 'tutor') && <li class="nav-item">
                         <Link style={noUnderline} to={`/${PATH.TUTORS}`}><a className="nav-link" href="#">Tutors</a></Link>
-                        </li>
+                        </li>}
                         <li class="nav-item">
                         <Link style={noUnderline} to={`/${PATH.APPOINTMENTS}`}><a className="nav-link" href="#">Meetings</a></Link>
                         </li>
@@ -40,14 +46,26 @@ export default class Header extends Component {
                         </li>
                     </ul>
                 </div>
-                <ul class="navbar-nav ms-auto d-flex align-items-center">
-                    <li class="nav-item">
-                        <button type="button" class="btn btn-outline-primary btn-sm m-1">Log in</button>
-                    </li>
-                    <li class="nav-item">
-                        <button type="button" class="btn btn-warning btn-sm m-1">Signup</button>
-                    </li>
-                </ul>
+                {
+                    sessionStorage.getItem('token') ? 
+                    <ul class="navbar-nav ms-auto d-flex align-items-center">
+                        <li class="nav-item">
+                        <Link style = {{textDecoration: 'none'}} to={`
+                        ${PATH.HOME}`}><button type="button" class="btn btn-warning btn-sm m-1" onClick={() => {
+                            sessionStorage.clear();
+                            window.location.href = 'http://localhost:3001/login';
+                        }}>Sign out</button></Link>
+                        </li>
+                    </ul> :
+                    <ul class="navbar-nav ms-auto d-flex align-items-center">
+                        <li class="nav-item">
+                            <Link style = {{textDecoration: 'none'}} to={`/${PATH.LOGIN}`}><button type="button" class="btn btn-outline-primary btn-sm m-1">Log in</button></Link>
+                        </li>
+                        <li class="nav-item">
+                            <Link style = {{textDecoration: 'none'}} to={`/${PATH.SIGNUP}`}><button type="button" class="btn btn-warning btn-sm m-1">Signup</button></Link>
+                        </li>
+                    </ul>
+                }
             </div>
             </div>
             </nav>
@@ -55,3 +73,6 @@ export default class Header extends Component {
     )
   }
 }
+  
+  
+  export default (Header)

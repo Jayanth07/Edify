@@ -1,5 +1,6 @@
 import { createStore } from 'redux'
 import rootReducer from './reducer'
+import { createBrowserHistory } from 'history';
 
 function configureStore() {
     return createStore(
@@ -7,6 +8,10 @@ function configureStore() {
         {
             tutors: {
                 id: undefined
+            },
+            user: {
+                token: undefined,
+                userType: undefined 
             }
         }
     );

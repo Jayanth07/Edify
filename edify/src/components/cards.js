@@ -97,7 +97,7 @@ class Cards extends Component {
                             <p class="fonts" style={{fontSize: '16px'}}><i className="tutor-bio"><b>Courses: </b>{tutor.courses}</i></p>
                         </div>
                         <div class="buttons">
-                            <button class="btn btn-outline-primary px-4">Message</button> 
+                            <button class="btn btn-outline-primary px-4"><i class="bi bi-heart"></i>  Add to Favorites</button> 
                             <Link to={`${tutor._id}`}>
                                 <button class="btn btn-warning px-4 ms-3 text-white" onClick={() => this.openDetails(tutor._id)}>Profile</button>
                             </Link>    

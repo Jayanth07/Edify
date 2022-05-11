@@ -1,4 +1,10 @@
 import React, { Component } from "react";
+import { connect } from 'react-redux'
+import { PATH } from './../constants/appConstants'
+import { Link } from "react-router-dom"
+import Header from '../components/header'
+import Footer from '../components/footer'
+import { setLoginState } from "../redux/actions";
 
 class Login extends Component {
   constructor() {
@@ -54,7 +60,6 @@ class Login extends Component {
       default:
         break;
     }
-    console.log("error:", name, errorMessage);
     return errorMessage;
   };
 
@@ -67,12 +72,34 @@ class Login extends Component {
       return false;
     }
     console.log("Data: ", form);
+
+    fetch('http://localhost:3000/loginsignup/login', {
+    method: 'post',
+		headers : { 
+			'Content-Type': 'application/json',
+			'Accept': 'application/json'
+		},
+    body: JSON.stringify({
+      email: form.email,
+      password: form.password
+    })
+		})
+		.then( res => res.json() )
+		.then( (data) => {
+      console.log('Login success')
+      console.log(data)
+      sessionStorage.setItem('token', data.token)
+      sessionStorage.setItem('userType', data.user_type)
+      setLoginState(data.token, data.user_type)
+      window.location.href = 'http://localhost:3001/';
+      // this.props.history.push('http://localhost:3001/');
+		})
+		.catch(console.log)
   };
 
   formValidation = (form, formErrors, validationsFunction) => {
     const errorObj = {};
     Object.keys(formErrors).map((attribute) => {
-      console.log("value", form["imageFile"]);
       const msg = validationsFunction(attribute, form[attribute]);
       if (msg) errorObj[attribute] = msg;
     });
@@ -82,16 +109,20 @@ class Login extends Component {
   render() {
     const { form, formErrors } = this.state;
     return (
-      <>
+      <div>
+        <Header/>
         <div class="container">
           <div class="row d-flex justify-content-center align-items-center mt-5">
             <div class="p-sm-5">
               <div class="row d-flex justify-content-center order-2 pd-3">
-                <div class=" login col-sm-5">
+                <div class=" login col-sm-5" style={{
+                  backgroundColor: "rgba(255, 255, 255, 0.85)",
+                  borderRadius: "15px",
+                }}>
                   <h3>Login</h3>
 
                   <div className="form-group">
-                    <i class="bi bi-envelope-fill me-3 icon"></i>
+                    <i class="bi bi-envelope-fill me-3 icon iconAppoint"></i>
                     <label>
                       Email:<span className="asterisk">*</span>
                     </label>
@@ -109,7 +140,7 @@ class Login extends Component {
                   </div>
 
                   <div className="form-group">
-                    <i class="bi bi-key-fill me-3 icon"></i>
+                    <i class="bi bi-key-fill me-3 icon iconAppoint"></i>
                     <label>
                       Password:<span className="asterisk">*</span>
                     </label>
@@ -127,18 +158,16 @@ class Login extends Component {
                   </div>
 
                   <div className="form-group ">
-                    <input
+                    <button
                       type="button"
-                      className="btn submit"
-                      value="Login"
+                      className="btn btn-warning btn-sm m-1 submit"
                       onClick={this.handleSubmit}
-                    />
+                    >Login</button>
                   </div>
 
                   <p style={{ textAlign: "center" }}>
-                    Not a User? &nbsp;{" "}
-                    <span style={{ color: "blue" }}>SignUp</span>
-                    {/* <Link from="/" to='/register' >Sign Up</Link > */}
+                    Not a User?&nbsp;{" "}
+                    <Link style = {{textDecoration: 'none'}} to={`/${PATH.SIGNUP}`}><a className="nav-link" href="#">SignUp</a></Link>
                   </p>
                 </div>
                 {/* //end of login form */}
@@ -146,8 +175,25 @@ class Login extends Component {
             </div>
           </div>
         </div>
-      </>
+        <Footer/>
+      </div>
     );
   }
 }
-export default Login;
+
+const mapStateToProps = state => {
+  console.log('heyaa')
+  console.log(state)
+  return {
+      token: state.user.token,
+      userType: state.user.userType
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+      setLoginState: (token, userType) => dispatch(setLoginState(token, userType))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login)

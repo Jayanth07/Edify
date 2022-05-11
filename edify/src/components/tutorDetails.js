@@ -1,11 +1,16 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { selectTutor } from '../redux/actions'
-import { Navigate } from 'react-router-dom'
 import Header from '../components/header'
 import Footer from '../components/footer'
 
 class TutorDetails extends Component {
+
+  
+  state = {
+      token: sessionStorage.getItem('token'),
+      userType: sessionStorage.getItem('userType')
+  }
 
   componentDidMount() {
     window.scrollTo(0, 0);
@@ -90,6 +95,7 @@ class TutorDetails extends Component {
                 
               <br/>
 
+              {this.state.userType !== 'tutor' && <div>
               <h3 className="courses">Appointments</h3>
 
               <div class="rating-block">
@@ -123,6 +129,7 @@ class TutorDetails extends Component {
                   <br/>
                 </div>
               </div>
+              </div>}
 
 
               <h3 className="courses mt-2">Student feedback</h3>
@@ -188,7 +195,8 @@ class TutorDetails extends Component {
                       </div>
                     </div>
                     <hr/>
-                  <div class="row">
+
+                  {this.state.userType !== 'tutor' && <div class="row">
                       <div class="col-sm-3">
                         <img src="../profile_pic.webp" class="img-rounded" style={{width: 60, height: 60}}/>
                         <div class="review-block-name"></div>
@@ -205,7 +213,7 @@ class TutorDetails extends Component {
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div>}
                   </div>
                 </div>
               </div>

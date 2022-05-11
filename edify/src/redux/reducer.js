@@ -18,8 +18,23 @@ const tutorsReducer = (state=[], action) => {
     }
 }
 
+const userReducer = (state={}, action) => {
+    switch (action.type) {
+
+        case 'LOGIN':
+            return {
+                ...state,
+                token: action.payload.token,
+                userType: action.payload.userType
+            };
+
+        default: return state            
+    }
+}
+
 const rootReducer = combineReducers({
-    tutors: tutorsReducer
+    tutors: tutorsReducer,
+    user: userReducer
 });
 
 export default rootReducer;
