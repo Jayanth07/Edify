@@ -25,64 +25,50 @@ router.get('/:id', function(req, res) {
 
 router.post('/', function(req, res) {
 
-  const { stars, comment, token, student_id } = req.body;
+  const { rating, comment, token, tutor_id } = req.body;
 
 
 
-  if (!(stars && comment && token && tutor_id)) {
+  if (!(rating && comment && token && tutor_id)) {
     res.send('All fields are required!')
     res.status(400);
   } else {
     token_obj=jwt.verify(token, 'secretkey');
-    console.log(token_obj);/*
+    console.log(token_obj);
+
     let email=token_obj.email;
     let user_type=token_obj.user_type;
-    let person_id=token_obj.person_id;
+    let student_id=token_obj.person_id;
     collection.find({tutor_id: tutor_id}, function(err, feedback) {
       if (err)
         throw err;
   
       if (feedback) {
-        feedback.feedbacks.push({"student_id": person_id, "rating": stars, "comment": comment})
-        collection.update({_id:feedback.id},
+        feedback.comments=feedback.comments.push({"student_id": student_id , "rating": rating, "comment": comment});
+        collection.update({_id:feedback._id},
           {$set: {
-          first_name: req.body.first_name,
-          last_name: req.body.last_name,
-          bio: req.body.bio,
-          courses: req.body.courses,
-          location: req.body.location,
-          rating: req.body.rating,
-          phone_number: req.body.phone_number,
-          email: req.body.email,
-          DOB: req.body.DOB,
-          certificates: req.body.certificates,
-          totalTutoringHours: totalTutoringHours,
-          path: req.body.path
+          count: feedback.count+1,
+          avg_rating: (feedback.avg_rating*feedback.count+feedback.rating)/(feedback.count+1),
+          comments: feedback.comments
         }
-        })
-        res.send('An account for this email already exists, please login!')
-        res.status(400);
+        }, function(err, feedback) {
+          if (err)
+          throw err;
+          res.json(feedback);
+        });
       } else {
         collection.insert({
-            first_name: req.body.first_name,
-            last_name: req.body.last_name,
-            bio: req.body.bio,
-            courses: req.body.courses,
-            location: req.body.location,
-            rating: req.body.rating,
-            phone_number: req.body.phone_number,
-            email: req.body.email,
-            DOB: req.body.DOB,
-            certificates: req.body.certificates,
-            totalTutoringHours: 0,
-            path: req.body.path
-        }, function(err, tutor) {
+            tutor_id: tutor_id,
+            count: 1,
+            avg_rating: rating,
+            comments: [{"student_id": student_id , "rating": rating, "comment": comment}]
+        }, function(err, feedback) {
           if (err)
            throw err;
-          res.json(tutor);
+          res.json(feedback);
         });
       }
-    })*/
+    })
   }  
   });
 
