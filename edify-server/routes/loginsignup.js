@@ -166,7 +166,7 @@ router.post('/login', function(req, res) {
       } else {
         password = crypto.createHash('sha1').update(password).digest('hex');
         if (user.password === password) { // Should be encrypted and then checked.
-          var token = jwt.sign({user_id: user._id, email, user_type: user.user_type}, 'secretkey');
+          var token = jwt.sign({user_id: user._id, person_id: user.person_id, email, user_type: user.user_type}, 'secretkey');
           user.token = token;
 
           delete(user['password'])
