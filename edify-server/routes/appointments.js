@@ -3,21 +3,35 @@ var router = express.Router();
 
 var monk = require('monk')
 var db = monk('localhost:27017/edify');
+const auth = require('./middleware/auth');
+const jwt = require('jsonwebtoken');
 
 var collection = db.get('appointments');
 
-router.get('/', function(req, res) {
-  collection.find({}, function(err, appointments) {
-    if (err)
-     throw err;
-    
-    // Sort appointments based on start time
-    appointments.sort(function(a,b){
-      return new Date(a.start_date_time) - new Date(b.start_date_time);
-    });
+router.get('/', auth, function(req, res) {
+  const token = req.body.token || req.query.token || req.headers['x-access-token'];
+  var decoded = jwt.verify(token, 'secretkey');
+
+  if(decoded.user_type=="tutor"){
+    collection.find({student_id: decoded.person_id}, function(err, appointments) {
+      if (err)
+      throw err;
+      appointments = appointments.filter(app => new Date(app.start_date_time) >= new Date());
+      // Sort appointments based on start time
+      appointments.sort(function(a,b){
+        return new Date(a.start_date_time) - new Date(b.start_date_time);
+      });
 
     res.json(appointments);
+
+
   });
+  } 
+  // else {
+    
+  // }
+
+
 });
 
 router.get('/:id', function(req, res) {
@@ -28,7 +42,7 @@ router.get('/:id', function(req, res) {
   });
 });
 
-router.post('/', function(req, res) {
+router.post('/', auth, function(req, res) {
 
   const { tutor_id, student_id, start_date_time, end_date_time, course, notes, status, studentName, tutorName } = req.body;
   let alreadyExists = false;

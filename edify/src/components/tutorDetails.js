@@ -13,6 +13,7 @@ class TutorDetails extends Component {
   }
 
   componentDidMount() {
+    document.getElementById('startDate').value = new Date().toDateString()
     window.scrollTo(0, 0);
   }
 
@@ -60,16 +61,7 @@ class TutorDetails extends Component {
                         <div className="info">
                          <a href="">{tutor.email}</a> 
                           </div>
-                    </div>
-                    
-                     <div className="tutor-info-details-text">
-                              <div className="icon">
-								        	<i className="fas fa-map-marker-alt"></i>
-								        </div>
-                        <div className="info">
-                          {tutor.location}
-                          </div>
-                          </div>       
+                    </div>      
              </div>  
              </div>
             
@@ -85,14 +77,6 @@ class TutorDetails extends Component {
                <div className="courses">Total Tutoring Hours
                  <div className="course-details" style={{color: 'black'}}>{tutor.totalTutoringHours}</div>
                </div>
-
-               <div className="education">
-                  <h5 className="tutor-certifications">Certifications</h5>
-                     <div className="tutor-certi-details">
-                        {tutor.certificates.map((d,id) => (<div key={id}>{d}</div>))} 
-                    </div>
-                </div>
-                
               <br/>
 
               {this.state.userType !== 'tutor' && <div>
@@ -103,7 +87,7 @@ class TutorDetails extends Component {
 
                   <div class="col-sm">
                       <h4>Start date:</h4>
-                      <input className='rounded' type="date" id="start" name="trip-start" value="2022-05-12"></input>
+                      <input className='rounded' type="date" id="startDate" name="trip-start" value="05/12/2022"></input>
                   </div>
                   
                   <div class="col-sm">

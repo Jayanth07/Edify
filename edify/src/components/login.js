@@ -18,6 +18,7 @@ class Login extends Component {
         email: null,
         password: null,
       },
+      loginError: ''
     };
   }
 
@@ -88,13 +89,19 @@ class Login extends Component {
 		.then( (data) => {
       console.log('Login success')
       console.log(data)
+      if (data.error) {
+        this.setState({loginError: data.error})
+        return;
+      }
       sessionStorage.setItem('token', data.token)
       sessionStorage.setItem('userType', data.user_type)
       setLoginState(data.token, data.user_type)
       window.location.href = 'http://localhost:3001/';
       // this.props.history.push('http://localhost:3001/');
 		})
-		.catch(console.log)
+		.catch((e) => {
+      console.log(e)
+    })
   };
 
   formValidation = (form, formErrors, validationsFunction) => {
@@ -107,6 +114,7 @@ class Login extends Component {
   };
 
   render() {
+    console.log(this.state)
     const { form, formErrors } = this.state;
     return (
       <div>
@@ -165,6 +173,8 @@ class Login extends Component {
                     >Login</button>
                   </div>
 
+                  <span className="err">{this.state.loginError}</span>
+
                   <p style={{ textAlign: "center" }}>
                     Not a User?&nbsp;{" "}
                     <Link style = {{textDecoration: 'none'}} to={`/${PATH.SIGNUP}`}><a className="nav-link" href="#">SignUp</a></Link>
@@ -182,8 +192,6 @@ class Login extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log('heyaa')
-  console.log(state)
   return {
       token: state.user.token,
       userType: state.user.userType

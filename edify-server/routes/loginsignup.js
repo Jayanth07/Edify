@@ -5,6 +5,8 @@ var monk = require('monk')
 var db = monk('localhost:27017/edify');
 
 var collection = db.get('users');
+var studentCollection = db.get('students');
+var tutorCollection = db.get('tutors');
 
 const jwt = require('jsonwebtoken');
 const auth = require('./middleware/auth');
@@ -24,34 +26,82 @@ router.get('/welcome', auth, function(req, res) {
 })
 
 router.post('/register', (req, res) => {
-  let { username, email, password, user_type } = req.body;
-  if (!(username && email && password)) {
-    res.send('All fields are required!');
+  let {email, password, user_type, bio, courses, phone_number, first_name, last_name } = req.body;
+  let person_id;
+  if (!(email && password)) {
+    res.status(400).json({error: "All fields are required!"});
   } else {
     collection.findOne({ email: email }, function (err, user) {
       if (err) throw err;
 
       if (user) {
+        res.status(400).json({error: "User email or password is incorrect!"});
+        
         res.send("User already exists. Please login!");
       } else {
         //Hashing password
         password = crypto.createHash('sha1').update(password).digest('hex');
         let newUser = {
-          username,
           email,
           password,
           user_type // encrypt before storing
         }
-        collection.insert(newUser, function (err, user) {
-          if (err) throw err;
-          var token = jwt.sign({user_id: user._id, email, user_type:user_type}, 'secretkey');
+        collection.insert(newUser, function (err3, user) {
+          if (err3) throw err3;
+          let user_id=user._id;
+          if(user_type=="student"){
+            let studentDocument=user;
+            delete(studentDocument['password'])
+            delete(studentDocument['_id'])
 
-          if (token) {
-            user.token = token;
+            studentDocument.bio=bio;
+            studentDocument.phone_number=phone_number;
+            studentDocument.first_name=first_name;
+            studentDocument.last_name=last_name;
+
+            studentCollection.insert(studentDocument, function(err2, student){
+              if (err2) throw err2;
+              user.debug="Here man!!";
+              person_id=student._id;
+            });
+          }else{
+            let tutorDocument = {};
+            tutorDocument.email=user.email;
+            tutorDocument.user_id=user_id;
+
+            tutorDocument.bio=bio;
+            tutorDocument.courses=courses;
+            tutorDocument.phone_number=phone_number;
+            tutorDocument.first_name=first_name;
+            tutorDocument.last_name=last_name;
+
+            user.debug="Here jay man!!";
+
+            tutorCollection.insert(tutorDocument, (err1, tutor) => {
+              if (err1) {
+                console.log(`Inside insert`)
+
+                throw err1;
+              }
+
+            tutorCollection.findOne({email: user.email}, function(err4, tutor) {
+              console.log('Inside get tutor')
+              person_id = tutor._id
+              user.person_id=person_id;
+              console.log(`The id is ${person_id}`)
+              var token = jwt.sign({user_id: user_id, person_id: user.person_id, email, user_type:user_type}, 'secretkey');
+
+              if (token) {
+                user.token = token;
+              }
+
+              delete(user['password']);
+              delete(user['_id']);
+
+              res.json(user);
+            })
+          });
           }
-          delete(user['password'])
-          delete(user['_id'])
-          res.json(user);
         })
       }
     })
@@ -62,14 +112,13 @@ router.post('/login', function(req, res) {
   let { email, password } = req.body;
 
   if (!(email && password)) {
-    res.send('All fields are required!');
+    res.status(400).json({error: "All fields are required!"});
   } else {
     collection.findOne({email: email}, function (err, user) {
       if (err) throw err;
 
       if (user == null) {
-        res.send("User doesn't exist");
-
+        res.status(404).json({error: "User doesn't exist"});
       } else {
         password = crypto.createHash('sha1').update(password).digest('hex');
         if (user.password === password) { // Should be encrypted and then checked.
@@ -80,7 +129,7 @@ router.post('/login', function(req, res) {
           delete(user['_id'])
           res.json(user);
         } else {
-          res.send("User email or password is incorrect!");
+          res.status(400).json({error: "User email or password is incorrect!"});
         }
       }
     });
