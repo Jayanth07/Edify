@@ -13,24 +13,22 @@ router.get('/', auth, function(req, res) {
   var decoded = jwt.verify(token, 'secretkey');
 
   if(decoded.user_type=="tutor"){
-    collection.find({student_id: decoded.person_id}, function(err, appointments) {
-      if (err)
-      throw err;
-      appointments = appointments.filter(app => new Date(app.start_date_time) >= new Date());
-      // Sort appointments based on start time
-      appointments.sort(function(a,b){
-        return new Date(a.start_date_time) - new Date(b.start_date_time);
-      });
+    search = {tutor_id: decoded.person_id}
+  } else {
+    search = {student_id: decoded.person_id}
+  }
+
+  collection.find(search, function(err, appointments) {
+    if (err)
+    throw err;
+    appointments = appointments.filter(app => new Date(app.start_date_time) >= new Date());
+    // Sort appointments based on start time
+    appointments.sort(function(a,b){
+      return new Date(a.start_date_time) - new Date(b.start_date_time);
+    });
 
     res.json(appointments);
-
-
   });
-  } 
-  // else {
-    
-  // }
-
 
 });
 

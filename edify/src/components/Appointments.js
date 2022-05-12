@@ -8,7 +8,7 @@ const Appointments = (props) => {
 	let [appointments, setAppointments] = useState([]);
 	
 useEffect(() => {
-	fetch('http://localhost:3000/appointments', {
+	fetch(`http://localhost:3000/appointments?token=${sessionStorage.getItem('token')}`, {
 		headers : { 
 			'Content-Type': 'application/json',
 			'Accept': 'application/json'
