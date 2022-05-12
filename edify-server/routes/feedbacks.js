@@ -4,8 +4,10 @@ var router = express.Router();
 var monk = require('monk')
 var db = monk('localhost:27017/edify');
 
+const auth = require('./middleware/auth');
 const jwt = require('jsonwebtoken');
 var collection = db.get('feedbacks');
+var studentCollection = db.get('students');
 
 router.get('/', function(req, res) {
   collection.find({}, function(err, feedbacks) {
@@ -43,8 +45,10 @@ router.post('/', auth, function(req, res) {
     studentCollection.findOne({_id: student_id}, function(err, student){
     if (err)
     throw err;
-    console.log(student.first_name+" "+student.last_name);
-    student_name=student.first_name+" "+student.last_name;
+    if(student){
+      console.log(student.first_name+" "+student.last_name);
+      student_name=student.first_name+" "+student.last_name;
+    }
     });
     collection.findOne({tutor_id: tutor_id}, function(err, feedback) {
       if (err)

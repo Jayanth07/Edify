@@ -25,8 +25,6 @@ class TutorDetails extends Component {
 		})
 		.then( res => res.json() )
 		.then( (data) => {
-      console.log('here are feedbacks')
-      console.log(data)
       this.setState({ ...this.state, feedbacks: data })
     })
 		.catch((e) => {
@@ -162,6 +160,7 @@ class TutorDetails extends Component {
               
 
                 <div>
+
               <h3 className="courses mt-2">Student feedback</h3>
 
               <div className="container">
@@ -169,14 +168,14 @@ class TutorDetails extends Component {
                 <div class="col-sm">
                   <div class="rating-block">
                     <h4>Average rating:</h4>
-                    <h3>{this.state.feedbacks.avg_rating} <small>/ 5</small></h3>
+                    <h3>{this.state.feedbacks ? this.state.feedbacks.avg_rating : 0} <small>/ 5</small></h3>
                     <div class="ratings">
                       <div>
-                        <i class={`fa fa-star ${this.state.feedbacks.avg_rating >=1 ? 'rating-color' : ''}`}></i>
-                        <i class={`fa fa-star ${this.state.feedbacks.avg_rating >=2 ? 'rating-color' : ''}`}></i>
-                        <i class={`fa fa-star ${this.state.feedbacks.avg_rating >=3 ? 'rating-color' : ''}`}></i>
-                        <i class={`fa fa-star ${this.state.feedbacks.avg_rating >=4 ? 'rating-color' : ''}`}></i>
-                        <i class={`fa fa-star ${this.state.feedbacks.avg_rating ==5 ? 'rating-color' : ''}`}></i>
+                        <i class={`fa fa-star ${(this.state.feedbacks && this.state.feedbacks.avg_rating >= 1) ? 'rating-color' : ''}`}></i>
+                        <i class={`fa fa-star ${(this.state.feedbacks && this.state.feedbacks.avg_rating >= 2) ? 'rating-color' : ''}`}></i>
+                        <i class={`fa fa-star ${(this.state.feedbacks && this.state.feedbacks.avg_rating >= 3) ? 'rating-color' : ''}`}></i>
+                        <i class={`fa fa-star ${(this.state.feedbacks && this.state.feedbacks.avg_rating >= 4) ? 'rating-color' : ''}`}></i>
+                        <i class={`fa fa-star ${(this.state.feedbacks && this.state.feedbacks.avg_rating == 5) ? 'rating-color' : ''}`}></i>
                       </div>
                     </div>
                   </div>
@@ -187,9 +186,8 @@ class TutorDetails extends Component {
                 <div class="col-sm">
                   <hr/>
                   <div class="review-block">
-{console.log(this.state.feedbacks.comments)}
                     {
-                      this.state.feedbacks.comments && this.state.feedbacks.comments.map(c => {
+                      this.state.feedbacks && this.state.feedbacks.comments && this.state.feedbacks.comments.map(c => {
                         return (
                         <div>
                         <div class="row">
@@ -205,7 +203,7 @@ class TutorDetails extends Component {
                             <i class={`fa fa-star ${c.rating >=4 ? 'rating-color' : ''}`}></i>
                             <i class={`fa fa-star ${c.rating ==5 ? 'rating-color' : ''}`}></i>
                         </div>
-                        <div class="review-block-title">Student Name</div>
+                        <div class="review-block-title">{c.student_name}</div>
                         <div class="review-block-description">{c.comment}</div>
                       </div>
                     </div>

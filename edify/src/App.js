@@ -5,6 +5,7 @@ import HomePage from './pages/Home';
 import SearchTutors from './pages/SearchTutors';
 import Cards from './components/cards';
 import TutorDetails from './components/tutorDetails';
+import Favourites from './components/favourites';
 import { createHashHistory } from "history";
 import { PATH } from './constants/appConstants'
 import Appointments from './components/appointments';
@@ -26,6 +27,7 @@ function App(props) {
         <Route exact path={PATH.SIGNUP} element={<SignUp />} />
         <Route exact path={PATH.HOME} element={<SearchTutors />} />
         <Route exact path={PATH.TUTORS} element={<Cards />} />
+        <Route exact path={PATH.FAVOURITES} element={<Favourites />} />
         <Route exact path={PATH.TUTOR_DETAILS} element={<TutorDetails />} />
         <Route exact path={PATH.APPOINTMENTS} element={<Appointments />} />
         <Route exact path={PATH.APPOINTMENT_DETAILS} element={<AppointmentDetails />} />
