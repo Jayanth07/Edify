@@ -97,7 +97,6 @@ class Login extends Component {
       sessionStorage.setItem('userType', data.user_type)
       setLoginState(data.token, data.user_type)
       window.location.href = 'http://localhost:3001/';
-      // this.props.history.push('http://localhost:3001/');
 		})
 		.catch((e) => {
       console.log(e)

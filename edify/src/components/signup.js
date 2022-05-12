@@ -210,6 +210,7 @@ class SignUp extends Component {
       .then((response) => {
         console.log(response);
         console.log("log", response.data.error);
+      window.location.href = 'http://localhost:3001/';
       })
       .catch((error) => {
         console.log("error", error.response.data.error);

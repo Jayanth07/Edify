@@ -8,6 +8,7 @@ const jwt = require('jsonwebtoken');
 const { append } = require('express/lib/response');
 
 var collection = db.get('appointments');
+var studentCollection = db.get('students');
 
 router.get('/', auth, function(req, res) {
   const token = req.body.token || req.query.token || req.headers['x-access-token'];
@@ -43,9 +44,13 @@ router.get('/:id', function(req, res) {
 
 router.post('/', auth, function(req, res) {
 
-  const { tutor_id, student_id, start_date_time, end_date_time, course, notes, status, studentName, tutorName } = req.body;
+  const token = req.body.token || req.query.token || req.headers['x-access-token'];
+  var decoded = jwt.verify(token, 'secretkey');
+  let student_id = decoded.person_id;
+
+  const { tutor_id, start_date_time, end_date_time, course, notes, status, tutorName } = req.body;
   let alreadyExists = false;
-  if (!(tutor_id && student_id && start_date_time && end_date_time && course && notes && status && studentName && tutorName)) {
+  if (!(tutor_id && student_id && start_date_time && end_date_time && notes && status && tutorName)) {
     res.send('All fields are required!')
   } else {
     collection.find({ tutor_id: req.body.tutor_id }, function(err, appointments) {
@@ -65,27 +70,35 @@ router.post('/', auth, function(req, res) {
       });
 
       if (!alreadyExists) {
+        let student_name;
+
+        studentCollection.findOne({_id: student_id}, function(err, student){
+        if (err)
+        throw err;
+        if(student){
+          student_name=student.first_name + " " + student.last_name;
+        }
+
         collection.insert({
           tutor_id: req.body.tutor_id,
-          student_id: req.body.student_id,
+          student_id: student_id,
           start_date_time: req.body.start_date_time,
           end_date_time: req.body.end_date_time,
           course: req.body.course,
           notes: req.body.notes,
           status: req.body.status,
-          studentName: req.body.studentName,
+          studentName: student_name,
           tutorName: req.body.tutorName
         }, function(err, appointments) {
           if (err)
           throw err;
           res.json(appointments);
         });
-      }
+      });
 
-    })
-    
+      }
+    }) 
   }
-  
 });
 
 

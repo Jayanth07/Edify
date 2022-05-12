@@ -14,8 +14,14 @@ class TutorDetails extends Component {
   }
 
   componentDidMount() {
-    document.getElementById('startDate').value = new Date().toDateString()
+    let date = document.getElementById('startDate');
+    let today = new Date().toISOString().slice(0, 10);
     window.scrollTo(0, 0);
+    date.defaultValue = today;
+    date.onchange = () => {
+      console.log(date.value)
+      this.getAppointmentSlots(date.value)
+    }
 
     fetch(`http://localhost:3000/feedbacks/${this.props.tutorDetails[0]._id}`, {
       method: 'get',
@@ -32,12 +38,42 @@ class TutorDetails extends Component {
       console.log(e)
     })
 
-    this.getAppointmentSlots( new Date().toISOString().slice(0, 10))
+    this.getAppointmentSlots(today)
+  }
+
+  bookAppointment = (tutorName) => {
+    let date = document.getElementById('startDate');
+    let slot = parseInt(document.getElementById('slot').value);
+    slot = (slot < 7) ? slot + 12 : slot;
+
+console.log(new Date(date.value + "T" + (slot < 10 ? '0' + slot : '' + slot) + ":00:00"))
+
+    fetch(`http://localhost:3000/appointments`, {
+      method: 'POST',
+      headers : { 
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify(
+        {
+          token: sessionStorage.getItem('token'),
+            tutor_id: this.props.tutorsId,
+            tutorName: tutorName,
+            start_date_time: date.value + "T" + (slot < 10 ? '0' + slot : '' + slot) + ":00:00",
+            end_date_time: date.value + "T" + ((slot + 1) < 10 ? '0' + (slot + 1) : '' + (slot + 1)) + ":00:00",
+            notes: "Waiting to learn from you!",
+            status: "SCHEDULED"
+        }
+    )
+    })
+    .then( res => res.json() )
+    .then( (data) => {
+      window.location.href = 'http://localhost:3001/appointments';
+    })
+    .catch(console.log)
   }
 
   getAppointmentSlots = (date) => {
-    console.log('here we are')
-
     fetch(`http://localhost:3000/appointments/currentappointments`, {
       method: 'POST',
       headers : { 
@@ -117,7 +153,6 @@ class TutorDetails extends Component {
 								        </div>
                         <div className="info">
                           <a href={`tel:${tutor.phone_code}${tutor.phone_number}`}>{tutor.phone_code} {tutor.phone_number}</a>
-                          
                           </div>
                     </div>
                     <div className="tutor-info-details-text"> 
@@ -153,15 +188,15 @@ class TutorDetails extends Component {
 
                   <div class="col-sm">
                       <h4>Start date:</h4>
-                      <input className='rounded' type="date" id="startDate" name="trip-start" value={ new Date().toISOString().slice(0, 10)}></input>
+                      <input className='rounded' type="date" id="startDate" name="trip-start" ></input>
                   </div>
                   
                   <div class="col-sm">
                     <h4>Time Slot: </h4>
-                    <select class="form-select" aria-label="Default select example">
+                    <select class="form-select" id='slot' aria-label="Default select example">
                       {
                         this.state.slots && this.state.slots.map((s, i) => (
-                          <option value={i + 1}>{s}</option>
+                          <option value={parseInt(s.slice(0,2))}>{s}</option>
                         ))
                       }
                     </select>
@@ -169,16 +204,13 @@ class TutorDetails extends Component {
 
                   <div class="col-sm">
                     <h4>Confirm: </h4>
-                    <button type="button" class="btn btn-warning">Book</button>
+                    <button type="button" id='book' onClick={() => this.bookAppointment(tutor.first_name + ' ' + tutor.last_name)} class="btn btn-warning">Book</button>
                   </div>
 
                   <br/>
                 </div>
               </div>
               </div>}
-
-
-              
 
                 <div>
 
@@ -189,7 +221,7 @@ class TutorDetails extends Component {
                 <div class="col-sm">
                   <div class="rating-block">
                     <h4>Average rating:</h4>
-                    <h3>{this.state.feedbacks ? this.state.feedbacks.avg_rating : 0} <small>/ 5</small></h3>
+                    <h3>{(Math.round((this.state.feedbacks ? this.state.feedbacks.avg_rating : 0)*100,2)/100)} <small>/ 5</small></h3>
                     <div class="ratings">
                       <div>
                         <i class={`fa fa-star ${(this.state.feedbacks && this.state.feedbacks.avg_rating >= 1) ? 'rating-color' : ''}`}></i>
