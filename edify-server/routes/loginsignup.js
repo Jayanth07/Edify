@@ -35,7 +35,7 @@ router.post('/register', (req, res) => {
       if (err) throw err;
 
       if (user) {
-        res.status(400).json({error: "User email or password is incorrect!"});
+        res.status(400).json({error: "User already exists!!"});
         
         res.send("User already exists. Please login!");
       } else {
@@ -106,7 +106,8 @@ router.post('/register', (req, res) => {
             tutorDocument.phone_number=phone_number;
             tutorDocument.first_name=first_name;
             tutorDocument.last_name=last_name;
-
+            tutorDocument.total_tutoring_hours=0;
+            tutorDocument.path="person"+Math.getRandomInt(4,10)+'.jpg';
 
             tutorCollection.insert(tutorDocument, (err1, tutor) => {
               if (err1) {

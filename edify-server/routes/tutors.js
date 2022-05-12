@@ -38,9 +38,9 @@ router.post('/details', function(req, res) {
 
 router.post('/', function(req, res) {
 
-  const { first_name, last_name, bio, courses, location, rating, phone_number, email, DOB, certificates, path } = req.body;
+  const { first_name, last_name, bio, courses, phone_number, email } = req.body;
 
-  if (!(first_name && last_name && bio && courses && location && rating && phone_number && email && DOB && certificates && path)) {
+  if (!(first_name && last_name && bio && courses && phone_number && email)) {
     res.send('All fields are required!')
     res.status(400);
   } else {
@@ -57,14 +57,9 @@ router.post('/', function(req, res) {
             last_name: req.body.last_name,
             bio: req.body.bio,
             courses: req.body.courses,
-            location: req.body.location,
-            rating: req.body.rating,
             phone_number: req.body.phone_number,
             email: req.body.email,
-            DOB: req.body.DOB,
-            certificates: req.body.certificates,
-            totalTutoringHours: 0,
-            path: req.body.path
+            totalTutoringHours: Math.getRandomInt(104,190)
         }, function(err, tutor) {
           if (err)
            throw err;
