@@ -5,6 +5,8 @@ var monk = require("monk");
 var db = monk("localhost:27017/edify");
 
 var collection = db.get("students");
+const auth = require('./middleware/auth');
+const jwt = require('jsonwebtoken');
 
 router.get("/", function (req, res) {
   collection.find({}, function (err, students) {
@@ -21,9 +23,11 @@ router.get("/:id", function (req, res) {
 });
 
 //adding favourites
-router.put("/favourites", function (req, res) {
-  const { student_id, tutor_id } = req.body;
-
+router.put("/favourites", auth, function (req, res) {
+  const { token, tutor_id } = req.body;
+  token_obj=jwt.verify(token, 'secretkey');
+  console.log(token_obj);
+  let student_id=token_obj.person_id;
   if (!(student_id && tutor_id)) {
     res.send(" Required fields are missing!");
     res.status(400);
@@ -56,7 +60,10 @@ router.put("/favourites", function (req, res) {
 
 //delete favourites
 router.put("/removefavourites", function (req, res) {
-  const { student_id, tutor_id } = req.body;
+  const { token, tutor_id } = req.body;
+  token_obj=jwt.verify(token, 'secretkey');
+  console.log(token_obj);
+  let student_id=token_obj.person_id;
 
   if (!(student_id && tutor_id)) {
     res.send(" Required fields are missing!");
