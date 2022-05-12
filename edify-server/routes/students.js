@@ -5,6 +5,8 @@ var monk = require("monk");
 var db = monk("localhost:27017/edify");
 
 var collection = db.get("students");
+const auth = require('./middleware/auth');
+const jwt = require('jsonwebtoken');
 
 router.get("/", function (req, res) {
   collection.find({}, function (err, students) {
