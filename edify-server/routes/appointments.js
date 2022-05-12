@@ -87,8 +87,9 @@ router.post('/', auth, function(req, res) {
   
 });
 
+router.post('/')
 
-router.put('/:id', function(req, res) {
+router.put('/:id', auth, function(req, res) {
 
   const { tutor_id, student_id, start_date_time, end_date_time, course, notes, status, studentName, tutorName } = req.body;
   let overlaps = false;

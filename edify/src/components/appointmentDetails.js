@@ -4,11 +4,31 @@ import Header from '../components/header'
 import Footer from '../components/footer'
 
 
+
+
 const AppointmentDetails = (props) => {
 
 	let [appointmentDetails, setAppointmentDetails] = useState([]);
     let { appId } = useParams();
-	
+
+    const token = sessionStorage.getItem('token')
+    const userType = sessionStorage.getItem('userType')
+
+	const cancelAppointment = () => {
+        fetch('http://localhost:3000/appointments/' + appId, {
+                method: 'DELETE',
+                headers : { 
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                }
+            })
+            .then(res => res.json())
+            .then((data) => {
+          window.location.href = 'http://localhost:3001/appointments';
+            })
+            .catch(console.log)
+    }
+
 useEffect(() => {
 	fetch('http://localhost:3000/appointments/' + appId, {
             headers : { 
@@ -22,6 +42,7 @@ useEffect(() => {
 		})
 		.catch(console.log)
 }, []);
+
 
 
     return (
@@ -60,9 +81,20 @@ useEffect(() => {
                     {/* <!-- / project-info-box --> */}
                 </div>
                 {/* <!-- / column --> */}
-        
+
+                
+                    
                 <div className="col-md-7 pb-10">
                     <img src="../appointment.png" width={400} height={375} alt="project-image" className="rounded" />
+                    {token && userType !== 'tutor' && ((startDate.getTime() - (new Date()).getTime()) / (1000 * 60 * 60) > 24) &&
+                    <div className="form-group m-4">
+                    <button
+                      type="button"
+                      className="btn btn-danger btn-sm m-1 submit"
+                      onClick={() => cancelAppointment()}
+                    >Cancel Appointment</button>
+                  </div>}
+
                 </div>
             </div>
         </div>           
