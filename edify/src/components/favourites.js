@@ -55,7 +55,7 @@ class Favourites extends Component {
 	removeFavourites = (id) => {
 		console.log("id", id);
 		const base_url = "http://localhost:3000/students/removefavourites";
-		const data = { student_id: "627c4613606c1e37e00ff8a7", tutor_id: id };
+		const data = { token: sessionStorage.getItem('token'), tutor_id: id };
 		axios
 			.put(base_url, data)
 			.then((response) => {
