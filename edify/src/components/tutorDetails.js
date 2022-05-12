@@ -6,15 +6,58 @@ import Footer from '../components/footer'
 
 class TutorDetails extends Component {
 
-  
   state = {
       token: sessionStorage.getItem('token'),
-      userType: sessionStorage.getItem('userType')
+      userType: sessionStorage.getItem('userType'),
+      feedbacks: {}
   }
 
   componentDidMount() {
     document.getElementById('startDate').value = new Date().toDateString()
     window.scrollTo(0, 0);
+
+    fetch(`http://localhost:3000/feedbacks/${this.props.tutorDetails[0]._id}`, {
+      method: 'get',
+      headers : { 
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      }
+		})
+		.then( res => res.json() )
+		.then( (data) => {
+      console.log('here are feedbacks')
+      console.log(data)
+      this.setState({ ...this.state, feedbacks: data })
+    })
+		.catch((e) => {
+      console.log(e)
+    })
+  }
+
+  comment(tutorId) {
+    const rating = document.querySelector('input[name=rating]:checked').value;
+    const note = document.getElementById('comment').value;
+
+    fetch('http://localhost:3000/feedbacks', {
+      method: 'post',
+      headers : { 
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        rating: parseInt(rating),
+        comment: note,
+        token: sessionStorage.getItem('token'),
+        tutor_id: tutorId
+      })
+		})
+		.then( res => res.json() )
+		.then( (data) => {
+      window.location.href = 'http://localhost:3001/tutors'
+		})
+		.catch((e) => {
+      console.log(e)
+    })
   }
 
     render() {
@@ -116,6 +159,9 @@ class TutorDetails extends Component {
               </div>}
 
 
+              
+
+                <div>
               <h3 className="courses mt-2">Student feedback</h3>
 
               <div className="container">
@@ -123,14 +169,14 @@ class TutorDetails extends Component {
                 <div class="col-sm">
                   <div class="rating-block">
                     <h4>Average rating:</h4>
-                    <h3>{tutor.rating} <small>/ 5</small></h3>
+                    <h3>{this.state.feedbacks.avg_rating} <small>/ 5</small></h3>
                     <div class="ratings">
                       <div>
-                        <i class={`fa fa-star ${tutor.rating >=1 ? 'rating-color' : ''}`}></i>
-                        <i class={`fa fa-star ${tutor.rating >=2 ? 'rating-color' : ''}`}></i>
-                        <i class={`fa fa-star ${tutor.rating >=3 ? 'rating-color' : ''}`}></i>
-                        <i class={`fa fa-star ${tutor.rating >=4 ? 'rating-color' : ''}`}></i>
-                        <i class={`fa fa-star ${tutor.rating ==5 ? 'rating-color' : ''}`}></i>
+                        <i class={`fa fa-star ${this.state.feedbacks.avg_rating >=1 ? 'rating-color' : ''}`}></i>
+                        <i class={`fa fa-star ${this.state.feedbacks.avg_rating >=2 ? 'rating-color' : ''}`}></i>
+                        <i class={`fa fa-star ${this.state.feedbacks.avg_rating >=3 ? 'rating-color' : ''}`}></i>
+                        <i class={`fa fa-star ${this.state.feedbacks.avg_rating >=4 ? 'rating-color' : ''}`}></i>
+                        <i class={`fa fa-star ${this.state.feedbacks.avg_rating ==5 ? 'rating-color' : ''}`}></i>
                       </div>
                     </div>
                   </div>
@@ -141,45 +187,33 @@ class TutorDetails extends Component {
                 <div class="col-sm">
                   <hr/>
                   <div class="review-block">
-                    <div class="row">
+{console.log(this.state.feedbacks.comments)}
+                    {
+                      this.state.feedbacks.comments && this.state.feedbacks.comments.map(c => {
+                        return (
+                        <div>
+                        <div class="row">
                       <div class="col-sm">
                         <img src="../profile_pic.webp" class="img-rounded" style={{width: 60, height: 60}}/>
                         <div class="review-block-name"></div>
-                        <div class="review-block-date">January 29, 2016</div>
                       </div>
                       <div class="col-sm-9">
                         <div class="ratings">
-                            <i class="fa fa-star rating-color"></i>
-                            <i class="fa fa-star rating-color"></i>
-                            <i class="fa fa-star rating-color"></i>
-                            <i class="fa fa-star rating-color"></i>
-                            <i class="fa fa-star"></i>
+                            <i class={`fa fa-star ${c.rating >=1 ? 'rating-color' : ''}`}></i>
+                            <i class={`fa fa-star ${c.rating >=2 ? 'rating-color' : ''}`}></i>
+                            <i class={`fa fa-star ${c.rating >=3 ? 'rating-color' : ''}`}></i>
+                            <i class={`fa fa-star ${c.rating >=4 ? 'rating-color' : ''}`}></i>
+                            <i class={`fa fa-star ${c.rating ==5 ? 'rating-color' : ''}`}></i>
                         </div>
-                        <div class="review-block-title">Tylor Smith</div>
-                        <div class="review-block-description">this was nice in buy. this was nice in buy. this was nice in buy. this was nice in buy this was nice in buy this was nice in buy this was nice in buy this was nice in buy</div>
-                      </div>
-                    </div>
-                    <hr/>
-                    <div class="row">
-                      <div class="col-sm-3">
-                        <img src="../profile_pic.webp" class="img-rounded" style={{width: 60, height: 60}}/>
-                        <div class="review-block-name"></div>
-                        <div class="review-block-date">January 29, 2016</div>
-                      </div>
-                      <div class="col-sm-9">
-                      <div class="ratings">
-                          <i class="fa fa-star rating-color"></i>
-                          <i class="fa fa-star rating-color"></i>
-                          <i class="fa fa-star rating-color"></i>
-                          <i class="fa fa-star"></i>
-                          <i class="fa fa-star"></i>
-                      </div>
                         <div class="review-block-title">Student Name</div>
-                        <div class="review-block-description">this was nice in buy. this was nice in buy. this was nice in buy. this was nice in buy this was nice in buy this was nice in buy this was nice in buy this was nice in buy</div>
+                        <div class="review-block-description">{c.comment}</div>
                       </div>
                     </div>
                     <hr/>
-
+                    </div>
+                      )})
+                    }
+                    
                   {this.state.userType !== 'tutor' && <div class="row">
                       <div class="col-sm-3">
                         <img src="../profile_pic.webp" class="img-rounded" style={{width: 60, height: 60}}/>
@@ -191,9 +225,9 @@ class TutorDetails extends Component {
                         <br/>
                       </div>
                         <div class="comment-area">
-                          <textarea class="form-control" placeholder="Add your comment here" rows="4"></textarea>
+                          <textarea class="form-control" id="comment" placeholder="Add your comment here" rows="4"></textarea>
                           <div class="row-6 text-right">
-                            <div class="pull-right" style={{ marginTop: '10px'}}> <button class="btn btn-warning send btn-sm">Comment </button> </div>
+                            <div class="pull-right" style={{ marginTop: '10px'}}> <button class="btn btn-warning send btn-sm" id="commentBtn" onClick={() => {this.comment(tutor._id)}}>Comment </button> </div>
                           </div>
                         </div>
                       </div>
@@ -204,6 +238,8 @@ class TutorDetails extends Component {
 		
 
               </div>  
+              </div>
+
             </div>
         </div>
         ))}

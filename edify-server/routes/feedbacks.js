@@ -6,10 +6,8 @@ var db = monk('localhost:27017/edify');
 
 const jwt = require('jsonwebtoken');
 var collection = db.get('feedbacks');
-var studentCollection = db.get('students');
-const auth = require('./middleware/auth');
 
-router.get('/', auth, function(req, res) {
+router.get('/', function(req, res) {
   collection.find({}, function(err, feedbacks) {
     if (err)
      throw err;
@@ -18,14 +16,14 @@ router.get('/', auth, function(req, res) {
 });
 
 router.get('/:id', function(req, res) {
-  collection.find({ _id: req.params.id }, function(err, feedback) {
+  collection.findOne({ tutor_id: req.params.id }, function(err, feedback) {
     if (err)
      throw err;
     res.json(feedback);
   });
 });
 
-router.post('/', auth, function(req, res) {
+router.post('/', function(req, res) {
 
   const { rating, comment, token, tutor_id } = req.body;
 
@@ -33,33 +31,24 @@ router.post('/', auth, function(req, res) {
     res.send('All fields are required!')
     res.status(400);
   } else {
+    let rating_val = parseInt(rating)
     token_obj=jwt.verify(token, 'secretkey');
     console.log(token_obj);
 
     let email=token_obj.email;
     let user_type=token_obj.user_type;
     let student_id=token_obj.person_id;
-    let student_name;
-
-    studentCollection.findOne({_id: student_id}, function(err, student){
-      if (err)
-      throw err;
-      console.log(student.first_name+" "+student.last_name);
-      student_name=student.first_name+" "+student.last_name;
-    });
-
     collection.findOne({tutor_id: tutor_id}, function(err, feedback) {
       if (err)
         throw err;
       console.log("It's here");
       if (feedback && feedback.length!=0) {
-      console.log("It's here too");
-      feedback.comments.push({"student_id": student_id , student_name, "rating": rating, "comment": comment});
-      console.log(feedback);
+      feedback.comments.push({"student_id": student_id , "rating": rating_val, "comment": comment});
+      console.log((feedback.avg_rating*feedback.count+rating_val)/(feedback.count+1));
         collection.update({_id:feedback._id},
           {$set: {
           count: feedback.count+1,
-          avg_rating: (feedback.avg_rating*feedback.count+rating)/(feedback.count+1),
+          avg_rating: (feedback.avg_rating*feedback.count+rating_val)/(feedback.count+1),
           comments: feedback.comments
         }
         }, function(err, feedback) {
@@ -68,11 +57,12 @@ router.post('/', auth, function(req, res) {
           res.json(feedback);
         });
       } else {
+    let rating_val = parseInt(rating)
         collection.insert({
             tutor_id: tutor_id,
             count: 1,
-            avg_rating: rating,
-            comments: [{"student_id": student_id ,student_name, "rating": rating, "comment": comment}]
+            avg_rating: rating_val,
+            comments: [{"student_id": student_id , "rating": rating_val, "comment": comment}]
         }, function(err, feedback) {
           if (err)
            throw err;
