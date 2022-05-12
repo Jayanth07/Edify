@@ -221,7 +221,7 @@ console.log(new Date(date.value + "T" + (slot < 10 ? '0' + slot : '' + slot) + "
                 <div class="col-sm">
                   <div class="rating-block">
                     <h4>Average rating:</h4>
-                    <h3>{(Math.round((this.state.feedbacks ? this.state.feedbacks.avg_rating : 0)*100,2)/100)} <small>/ 5</small></h3>
+                    <h3>{( Math.round((this.state.feedbacks ? this.state.feedbacks.avg_rating : 0)*100,2)/100)} <small>/ 5</small></h3>
                     <div class="ratings">
                       <div>
                         <i class={`fa fa-star ${(this.state.feedbacks && this.state.feedbacks.avg_rating >= 1) ? 'rating-color' : ''}`}></i>

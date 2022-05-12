@@ -70,13 +70,13 @@ class Header extends Component {
 											</li>
 										)}
 
-									<li class="nav-item">
+									{sessionStorage.getItem('token') && <li class="nav-item">
 										<Link style={noUnderline} to={`/${PATH.APPOINTMENTS}`}>
 											<a className="nav-link" href="#">
 												Meetings
 											</a>
 										</Link>
-									</li>
+									</li>}
 									<li class="nav-item">
 										<a className="nav-link" href="#">
 											About

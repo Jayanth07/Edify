@@ -34,6 +34,8 @@ class Cards extends Component {
 			})
 				.then((res) => res.json())
 				.then((tutorsdata) => {
+
+                    if (sessionStorage.getItem('token') && sessionStorage.getItem('userType') == 'student') {
 					fetch("http://localhost:3000/students/tokens/", {
 						method: "post",
 						headers: {
@@ -61,6 +63,10 @@ class Cards extends Component {
 					// this.props.setTutors(data);
 					// this.setState({ displayTutors: data });
 					// console.log(data);
+                } else {
+							this.setState({ displayTutors: tutorsdata });
+							this.props.setTutors(tutorsdata);
+                }
 				})
 				.catch(console.log);
 		}
@@ -194,7 +200,7 @@ class Cards extends Component {
 											</p>
 										</div>
 										<div class="buttons">
-											{!this.state.favouriteTutors.includes(tutor._id) && (
+											{sessionStorage.getItem('token') && !this.state.favouriteTutors.includes(tutor._id) && (
 												<button
 													class="btn btn-outline-primary px-4"
 													onClick={() => this.addFavourites(tutor._id)}
@@ -202,7 +208,7 @@ class Cards extends Component {
 													<i class="bi bi-heart"></i> Add to Favorites
 												</button>
 											)}
-											{this.state.favouriteTutors.includes(tutor._id) && (
+											{sessionStorage.getItem('token') && this.state.favouriteTutors.includes(tutor._id) && (
 												<button
 													class="btn btn-warning px-4 ms-3 text-white"
 													disabled
