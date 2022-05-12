@@ -59,7 +59,7 @@ router.post('/', function(req, res) {
             courses: req.body.courses,
             phone_number: req.body.phone_number,
             email: req.body.email,
-            totalTutoringHours: Math.getRandomInt(104,190)
+            totalTutoringHours: 0
         }, function(err, tutor) {
           if (err)
            throw err;

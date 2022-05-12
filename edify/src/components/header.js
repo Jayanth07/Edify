@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { PATH } from "./../constants/appConstants";
-import { connect } from "react-redux";
 
 class Header extends Component {
 	state = {
@@ -83,7 +82,7 @@ class Header extends Component {
 											About
 										</a>
 									</li>
-									<li>
+									{/* <li>
 										<form class="d-flex align-items-center">
 											<input
 												class="form-control input-sm"
@@ -95,7 +94,7 @@ class Header extends Component {
 												<i class="bi bi-search"></i>
 											</button>
 										</form>
-									</li>
+									</li> */}
 								</ul>
 							</div>
 							{sessionStorage.getItem("token") ? (
