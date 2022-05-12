@@ -6,6 +6,7 @@ import { PATH } from "./../constants/appConstants";
 import { setTutors } from "../redux/actions";
 import Header from "../components/header";
 import Footer from "../components/footer";
+import axios from "axios";
 
 class Favourites extends Component {
 	state = {
@@ -32,9 +33,6 @@ class Favourites extends Component {
 						.then((data) => {
 							this.setState({ favouriteTutors: data[0].favourite_tutors });
 							this.props.setTutors(tutorsdata);
-
-							console.log("tutorsData", tutorsdata);
-							console.log("favouriteTu", this.state.favouriteTutors);
 							// const newList = tutorsdata.filter((e) =>
 							// 	this.state.favouriteTutors.includes(tutorsdata._id)
 							// );
@@ -54,7 +52,21 @@ class Favourites extends Component {
 		this.props.selectTutor(id);
 	};
 
-	removeFavourites() {}
+	removeFavourites = (id) => {
+		console.log("id", id);
+		const base_url = "http://localhost:3000/students/removefavourites";
+		const data = { student_id: "627c4613606c1e37e00ff8a7", tutor_id: id };
+		axios
+			.put(base_url, data)
+			.then((response) => {
+				console.log(response);
+			})
+			.catch((error) => {
+				console.log("error", error.response);
+			});
+		window.location.reload(false);
+		console.log(JSON.stringify(data));
+	};
 
 	render() {
 		console.log("display list");
@@ -111,12 +123,11 @@ class Favourites extends Component {
 											</p>
 										</div>
 										<div class="buttons">
-											<button class="btn btn-outline-primary px-4">
-												<i
-													class="bi bi-heart"
-													onClick={this.removeFavourites}
-												></i>{" "}
-												Remove from Favorites
+											<button
+												class="btn btn-outline-primary px-4"
+												onClick={() => this.removeFavourites(tutor._id)}
+											>
+												<i class="bi bi-heart"></i> Remove from Favorites
 											</button>
 											<Link to={`${tutor._id}`}>
 												<button
