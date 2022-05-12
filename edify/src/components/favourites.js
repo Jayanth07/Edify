@@ -28,7 +28,16 @@ class Favourites extends Component {
 				.then((res) => res.json())
 				.then((tutorsdata) => {
 					console.log("data", tutorsdata);
-					fetch("http://localhost:3000/students/627c4613606c1e37e00ff8a7", {})
+					fetch("http://localhost:3000/students/tokens/", {
+						method: "post",
+						headers: {
+							"Content-Type": "application/json",
+							Accept: "application/json",
+						},
+						body: JSON.stringify({
+							token: sessionStorage.getItem("token"),
+						}),
+					})
 						.then((res) => res.json())
 						.then((data) => {
 							this.setState({ favouriteTutors: data[0].favourite_tutors });
@@ -55,7 +64,7 @@ class Favourites extends Component {
 	removeFavourites = (id) => {
 		console.log("id", id);
 		const base_url = "http://localhost:3000/students/removefavourites";
-		const data = { token: sessionStorage.getItem('token'), tutor_id: id };
+		const data = { token: sessionStorage.getItem("token"), tutor_id: id };
 		axios
 			.put(base_url, data)
 			.then((response) => {
