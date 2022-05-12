@@ -11,6 +11,7 @@ import axios from "axios";
 class Cards extends Component {
 	state = {
 		displayTutors: this.props.tutors,
+		favouriteTutors: [],
 	};
 
 	componentDidMount() {
@@ -32,10 +33,34 @@ class Cards extends Component {
 				},
 			})
 				.then((res) => res.json())
-				.then((data) => {
-					this.props.setTutors(data);
-					this.setState({ displayTutors: data });
-					console.log(data);
+				.then((tutorsdata) => {
+					fetch("http://localhost:3000/students/tokens/", {
+						method: "post",
+						headers: {
+							"Content-Type": "application/json",
+							Accept: "application/json",
+						},
+						body: JSON.stringify({
+							token: sessionStorage.getItem("token"),
+						}),
+					})
+						.then((res) => res.json())
+						.then((data) => {
+							this.setState({ favouriteTutors: data[0].favourite_tutors });
+							this.props.setTutors(tutorsdata);
+							// const newList = tutorsdata.filter((e) =>
+							// 	this.state.favouriteTutors.includes(tutorsdata._id)
+							// );
+							let newFavourites = tutorsdata.filter((tutor) =>
+								this.state.favouriteTutors.some((fav) => tutor._id === fav)
+							);
+							console.log("newList", newFavourites);
+							this.setState({ displayTutors: tutorsdata });
+						})
+						.catch(console.log);
+					// this.props.setTutors(data);
+					// this.setState({ displayTutors: data });
+					// console.log(data);
 				})
 				.catch(console.log);
 		}
@@ -169,12 +194,22 @@ class Cards extends Component {
 											</p>
 										</div>
 										<div class="buttons">
-											<button
-												class="btn btn-outline-primary px-4"
-												onClick={() => this.addFavourites(tutor._id)}
-											>
-												<i class="bi bi-heart"></i> Add to Favorites
-											</button>
+											{!this.state.favouriteTutors.includes(tutor._id) && (
+												<button
+													class="btn btn-outline-primary px-4"
+													onClick={() => this.addFavourites(tutor._id)}
+												>
+													<i class="bi bi-heart"></i> Add to Favorites
+												</button>
+											)}
+											{this.state.favouriteTutors.includes(tutor._id) && (
+												<button
+													class="btn btn-warning px-4 ms-3 text-white"
+													disabled
+												>
+													Added to Favorites
+												</button>
+											)}
 											<Link to={`${tutor._id}`}>
 												<button
 													class="btn btn-warning px-4 ms-3 text-white"
