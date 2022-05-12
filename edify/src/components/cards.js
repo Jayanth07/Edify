@@ -189,7 +189,7 @@ class Cards extends Component {
 											<p class="fonts" style={{ fontSize: "16px" }}>
 												<i className="tutor-bio">
 													<b>Courses: </b>
-													{tutor.courses}
+													{tutor.courses.join(', ')}
 												</i>
 											</p>
 										</div>

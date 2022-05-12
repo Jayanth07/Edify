@@ -50,7 +50,7 @@ useEffect(() => {
 									</h5>
 									<p class="card-text"><i class="bi bi-calendar-event-fill iconAppoint"></i>{startDate.toDateString()}</p>
 									<p class="card-text "><i class="bi bi-person-fill iconAppoint"></i>Meeting with {appointment.tutorName}</p>
-									<p class="card-text course"><b>Course:</b> {appointment.course}</p>
+									{/* <p class="card-text course"><b>Course:</b> {appointment.course}</p> */}
 								</div>
 							</div>
 						</div>
