@@ -5,6 +5,7 @@ var monk = require('monk')
 var db = monk('localhost:27017/edify');
 const auth = require('./middleware/auth');
 const jwt = require('jsonwebtoken');
+const { append } = require('express/lib/response');
 
 var collection = db.get('appointments');
 
@@ -87,7 +88,49 @@ router.post('/', auth, function(req, res) {
   
 });
 
-router.post('/')
+
+
+router.post('/currentappointments/', auth, function(req, res) {
+  let available_times={
+    1:'8AM-9AM',
+    2:'9AM-10AM',
+    3:'10AM-11AM',
+    4:'11AM-12PM',
+    5:'12PM-1PM',
+    6:'1PM-2PM',
+    7:'2PM-3PM',
+    8:'3PM-4PM',
+    9:'4PM-5PM'
+     };
+  const { tutor_id, selected_date, token } = req.body;
+  if (!(tutor_id && selected_date && token)) {
+    res.send('All fields are required!')
+  } else {
+    collection.find({ tutor_id: tutor_id }, function(err, appointments) {
+      if (err)
+      throw err;
+      let selected_dt=new Date(selected_date+"T12:00:00.000Z");
+      appointments = appointments.filter(app => new Date(app.start_date_time).toDateString() == selected_dt.toDateString());
+      // Sort appointments based on start time
+      appointments.sort(function(a,b){
+        return new Date(a.start_date_time) - new Date(b.start_date_time);
+      });
+
+      for(var key in appointments){
+        let dt=new Date(appointments[key]['start_date_time']);
+        dt=dt.getHours();
+        dt=dt-7;
+        if(available_times[dt]!=undefined){
+          delete available_times[dt];
+        }
+      }
+
+      res.json(Object.values(available_times));
+    });
+    
+  }
+  
+});
 
 router.put('/:id', auth, function(req, res) {
 
