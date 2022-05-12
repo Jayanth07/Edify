@@ -1,39 +1,91 @@
 import React, { Component } from "react";
-import axios from "axios";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import Header from '../components/header'
+import Footer from '../components/footer'
 
 const Edit = () => {
   console.log("user:");
   //   console.log("user:", this.props.user);
   //   console.log("name", props.user.firstname);
-  const firstname = "Deepika";
-  const lastname = "Mamidipelly";
-  const email = "dxm@utdallas.edu";
+  const [firstname, setFirstName] = useState("");
+  const [lastname, setLastName] = useState("");
+  const [email, setEmail] = useState("");
   const user = "tutor";
-  const [mobile, setMobile] = useState("2148921475");
-  const [password, setPassword] = useState("password");
-  const [confirmPassword, setConfirmPassword] = useState("password");
-  const [bio, setBio] = useState("Hello....");
-  const [courses, setCourses] = useState("wpl,db design");
+  const [mobile, setMobile] = useState("");
+  const [bio, setBio] = useState("");
+  const [courses, setCourses] = useState("");
+  let tutorId = '';
 
-  const form = { mobile, password, bio, courses, confirmPassword };
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("form", form);
+  const token = sessionStorage.getItem('token');
+  const form = { mobile, bio, courses };
+  const handleSubmit = () => {
+
+    fetch(`http://localhost:3000/tutors/${tutorId}` , {
+        method: 'PUT',
+        headers : { 
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: {
+            token: token,
+            email: email,
+            bio: bio,
+            courses: courses,
+            phone_number: mobile,
+            first_name: firstname,
+            last_name: lastname
+        }
+        })
+        .then( res => res.json() )
+        .then( (tutor) => {
+          console.log('Okk')
+          console.log(tutor)
+        })
+        .catch(console.log)
+
+
   };
 
+  useEffect(() => {
+
+    if (sessionStorage.getItem('userType') == 'tutor') {
+      fetch(`http://localhost:3000/tutors/details?token=${token}` , {
+        method: 'post',
+        headers : { 
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        }
+        })
+        .then( res => res.json() )
+        .then( (tutor) => {
+          console.log(tutor)
+          setEmail(tutor.email)
+          setFirstName(tutor.first_name)
+          setLastName(tutor.last_name)
+          setMobile(tutor.phone_number)
+          setBio(tutor.bio)
+          setCourses(tutor.courses.join(', '))
+        })
+        .catch(console.log)
+    }
+  }, []);
+
   return (
-    <>
+    <div>
+      <Header/>
       <div class="container">
         <div class="row d-flex justify-content-center align-items-center mt-5">
           <div class="p-sm-5">
             <div class="row d-flex justify-content-center order-2 pd-3">
-              <div class=" login col-sm-5">
+              <div class=" login col-sm-5" style={{
+                  backgroundColor: "rgba(255, 255, 255, 0.85)",
+                  borderRadius: "15px",
+                }}>
                 <h3>User Details</h3>
 
                 <div className="col-md-6">
                   <div className="form-group">
-                    <i class="bi bi-person-fill me-3 icon"></i>
+                    <i class="bi bi-person-fill me-3 icon iconAppoint"></i>
                     <label>
                       First Name:<span className="asterisk">*</span>
                     </label>
@@ -47,7 +99,7 @@ const Edit = () => {
                   </div>
 
                   <div className="form-group">
-                    <i class="bi bi-envelope-fill me-3 icon"></i>
+                    <i class="bi bi-envelope-fill me-3 icon iconAppoint"></i>
                     <label>
                       Email:<span className="asterisk">*</span>
                     </label>
@@ -59,24 +111,7 @@ const Edit = () => {
                       disabled
                     />
                   </div>
-                  <div className="form-group">
-                    <i class="bi bi-key-fill me-3 icon"></i>
-                    <label>
-                      Change Password:<span className="asterisk">*</span>
-                    </label>
-                    <input
-                      className="form-control"
-                      type="password"
-                      name="password"
-                      value={password}
-                      //   onChange={this.handleChange}
-                      //   onBlur={this.handleChange}
-                      onChange={(e) => setPassword(e.target.value)}
-                    />
-                    {/* {formErrors.password && (
-                      <span className="err">{formErrors.password}</span>
-                    )} */}
-                  </div>
+                  
                   <div className="form-group">
                     <label>Bio:</label>
                     <textarea
@@ -113,12 +148,11 @@ const Edit = () => {
 
                   {/* submit */}
                   <div className="form-group ">
-                    <input
+                  <button
                       type="button"
-                      className="btn submit"
-                      value="Submit"
+                      className="btn btn-warning btn-sm m-1 submit"
                       onClick={handleSubmit}
-                    />
+                    >Confirm</button>
                   </div>
                 </div>
 
@@ -126,7 +160,7 @@ const Edit = () => {
                 <div className="col-md-6">
                   {/* Last Name */}
                   <div className="form-group">
-                    <i class="bi bi-person-fill me-3 icon"></i>
+                    <i class="bi bi-person-fill me-3 icon iconAppoint"></i>
                     <label>
                       Last Name:<span className="asterisk">*</span>
                     </label>
@@ -138,9 +172,8 @@ const Edit = () => {
                       disabled
                     />
                   </div>
-
                   <div className="form-group">
-                    <i class="bi bi-telephone-fill me-3 icon"></i>
+                    <i class="bi bi-telephone-fill me-3 icon iconAppoint"></i>
                     <label>
                       Mobile:<span className="asterisk">*</span>
                     </label>
@@ -150,36 +183,10 @@ const Edit = () => {
                       name="mobile"
                       value={mobile}
                       onChange={(e) => setMobile(e.target.value)}
-                      //   onChange={this.handleChange}
-                      //   onBlur={this.handleChange}
                     />
-                    {/* {formErrors.mobile && (
-                      <span className="err">{formErrors.mobile}</span>
-                    )} */}
                   </div>
-
-                  {/* confirm password */}
-                  <div className="form-group">
-                    <i class="bi bi-key-fill me-3 icon"></i>
-                    <label>
-                      Confirm Password:<span className="asterisk">*</span>
-                    </label>
-                    <input
-                      className="form-control"
-                      type="password"
-                      name="confirmPassword"
-                      value={confirmPassword}
-                      //   onChange={this.handleChange}
-                      //   onBlur={this.handleChange}
-                      onChange={(e) => setConfirmPassword(e.target.value)}
-                    />
-                    {/* {formErrors.confirmPassword && (
-                      <span className="err">{formErrors.confirmPassword}</span>
-                    )} */}
-                  </div>
-
                   {/* //end of columns */}
-                  {/* 
+                  {/*
                   <div className="form-group">
                     <label className="mr-3">
                       User:<span className="asterisk">*</span>
@@ -235,7 +242,8 @@ const Edit = () => {
           </div>
         </div>
       </div>
-    </>
+      <Footer />
+    </div>
   );
 };
 

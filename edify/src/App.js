@@ -11,6 +11,8 @@ import Appointments from './components/appointments';
 import AppointmentDetails from './components/appointmentDetails';
 import Login from './components/login';
 import SignUp from './components/signup';
+import UserDetails from './components/userDetails';
+import Edit from './components/edit';
 
 function App(props) {
 
@@ -18,6 +20,8 @@ function App(props) {
     <BrowserRouter history={createHashHistory()} store={props.store}>
       <Routes>
         <Route index element={<HomePage />} />
+        <Route exact path={PATH.PROFILE} element={<UserDetails />} />
+        <Route exact path={PATH.EDIT} element={<Edit />} />
         <Route exact path={PATH.LOGIN} element={<Login />} />
         <Route exact path={PATH.SIGNUP} element={<SignUp />} />
         <Route exact path={PATH.HOME} element={<SearchTutors />} />

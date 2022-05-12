@@ -49,6 +49,9 @@ class Header extends Component {
                 {
                     sessionStorage.getItem('token') ? 
                     <ul class="navbar-nav ms-auto d-flex align-items-center">
+                        {sessionStorage.getItem('userType') == 'tutor' && <li class="nav-item">
+                            <Link style = {{textDecoration: 'none'}} to={`/${PATH.EDIT}`}><button type="button" class="btn btn-outline-primary btn-sm m-1">Edit Profile</button></Link>
+                        </li>}
                         <li class="nav-item">
                         <Link style = {{textDecoration: 'none'}} to={`
                         ${PATH.HOME}`}><button type="button" class="btn btn-warning btn-sm m-1" onClick={() => {

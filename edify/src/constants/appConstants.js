@@ -5,7 +5,9 @@ const PATH = {
     APPOINTMENTS: 'appointments',
     APPOINTMENT_DETAILS: 'appointments/:appId',
     LOGIN: 'login',
-    SIGNUP: 'signup'
+    SIGNUP: 'signup',
+    PROFILE: 'profile',
+    EDIT: 'edit'
 }
 
 export { PATH };

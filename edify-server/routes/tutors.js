@@ -6,6 +6,9 @@ var db = monk('localhost:27017/edify');
 
 var collection = db.get('tutors');
 
+const jwt = require('jsonwebtoken');
+const auth = require('./middleware/auth');
+
 router.get('/', function(req, res) {
   collection.find({}, function(err, tutors) {
     if (err)
@@ -19,6 +22,17 @@ router.get('/:id', function(req, res) {
     if (err)
      throw err;
     res.json(tutors);
+  });
+});
+
+router.post('/details', function(req, res) {
+  const token = req.body.token || req.query.token || req.headers['x-access-token'];
+  let decoded = jwt.verify(token, 'secretkey');
+
+  collection.findOne({ _id: decoded.person_id }, function(err, tutor) {
+    if (err)
+     throw err;
+    res.json(tutor);
   });
 });
 

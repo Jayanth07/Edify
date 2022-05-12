@@ -75,15 +75,15 @@ class Login extends Component {
     console.log("Data: ", form);
 
     fetch('http://localhost:3000/loginsignup/login', {
-    method: 'post',
-		headers : { 
-			'Content-Type': 'application/json',
-			'Accept': 'application/json'
-		},
-    body: JSON.stringify({
-      email: form.email,
-      password: form.password
-    })
+      method: 'post',
+      headers : { 
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        email: form.email,
+        password: form.password
+      })
 		})
 		.then( res => res.json() )
 		.then( (data) => {
