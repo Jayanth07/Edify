@@ -107,7 +107,7 @@ router.post('/register', (req, res) => {
             tutorDocument.first_name=first_name;
             tutorDocument.last_name=last_name;
             tutorDocument.total_tutoring_hours=0;
-            tutorDocument.path="person"+Math.getRandomInt(4,10)+'.jpg';
+            tutorDocument.path="person"+(Math.random() * (10 - 4) + 4)+'.jpg';
 
             tutorCollection.insert(tutorDocument, (err1, tutor) => {
               if (err1) {
