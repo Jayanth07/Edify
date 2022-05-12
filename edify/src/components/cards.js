@@ -1,115 +1,196 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { selectTutor } from '../redux/actions'
-import { Link } from "react-router-dom"
-import { PATH } from './../constants/appConstants'
-import { setTutors } from '../redux/actions'
-import Header from '../components/header'
-import Footer from '../components/footer'
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { selectTutor } from "../redux/actions";
+import { Link } from "react-router-dom";
+import { PATH } from "./../constants/appConstants";
+import { setTutors } from "../redux/actions";
+import Header from "../components/header";
+import Footer from "../components/footer";
+import axios from "axios";
 
 class Cards extends Component {
+	state = {
+		displayTutors: this.props.tutors,
+	};
 
-    state = {
-        displayTutors: this.props.tutors
-    }
+	componentDidMount() {
+		document.getElementById("filter").addEventListener("keydown", (e) => {
+			if (e.keyCode === 13) {
+				e.preventDefault();
+				this.filterTutors();
+			}
+		});
 
-    componentDidMount(){
-        document.getElementById('filter').addEventListener('keydown', (e) => {
-            if (e.keyCode === 13) {
-                e.preventDefault();
-                this.filterTutors();
-            }
-        });
+		if (
+			this.props.tutors === undefined ||
+			this.state.displayTutors === undefined
+		) {
+			fetch("http://localhost:3000/tutors", {
+				headers: {
+					"Content-Type": "application/json",
+					Accept: "application/json",
+				},
+			})
+				.then((res) => res.json())
+				.then((data) => {
+					this.props.setTutors(data);
+					this.setState({ displayTutors: data });
+					console.log(data);
+				})
+				.catch(console.log);
+		}
+	}
 
-        if (this.props.tutors === undefined || this.state.displayTutors === undefined) {
-            fetch('http://localhost:3000/tutors', {
-                headers : { 
-                  'Content-Type': 'application/json',
-                  'Accept': 'application/json'
-                }
-              })
-              .then(res => res.json())
-              .then((data) => {
-                  this.props.setTutors(data)
-                  this.setState({ displayTutors: data })
-                  console.log(data)
-              })
-              .catch(console.log)
-        }
-    }
+	openDetails = (id) => {
+		this.props.selectTutor(id);
+	};
 
-    openDetails = (id) => {
-        this.props.selectTutor(id);
-    }
+	filterTutors = () => {
+		let text = document.getElementById("filter").value;
+		if (!text) {
+			this.setState({ displayTutors: this.props.tutors });
+			return;
+		}
 
-    filterTutors = () => {
-        let text = document.getElementById('filter').value;
-        if (!text) {
-            this.setState({displayTutors: this.props.tutors});
-            return;
-        }
+		let filteredTutors = this.props.tutors.filter((t) => {
+			// Add if name matches
+			if (
+				t.first_name.toLowerCase().includes(text) ||
+				t.last_name.toLowerCase().includes(text)
+			)
+				return true;
 
-        let filteredTutors = this.props.tutors.filter(t => {
-            // Add if name matches
-            if (t.first_name.toLowerCase().includes(text) || t.last_name.toLowerCase().includes(text))
-                return true;
-            
-            // Add if one of the courses match
-            for(const c of t.courses) {
-                if (c.toLowerCase().includes(text))
-                    return true;
-            }
-            
-            return false;
-        });
+			// Add if one of the courses match
+			for (const c of t.courses) {
+				if (c.toLowerCase().includes(text)) return true;
+			}
 
-        this.setState({displayTutors: filteredTutors})
-    }
+			return false;
+		});
 
-    render() {
-        console.log('display list')
-        console.log(this.state)
-    return (
-    <div >
-        <Header />
+		this.setState({ displayTutors: filteredTutors });
+	};
 
-        <div class="col-5 text-center" style={{ marginTop: '75px', marginLeft: 'auto', marginRight: 'auto' }}>
-            <form class="d-flex align-items-center">
-                <input class="form-control input-sm" style={{ height: '50px'}} id='filter' onSubmit={() => {}} type="search" placeholder="Search for Tutors or Courses..." aria-label="Search" />
-                <button type="button" id='filterBtn' class="btn btn-warning btn-lg m-1" onClick={() => this.filterTutors()}>Filter</button>
-            </form>
-        </div>
+	//adding tutors as favourites
+	addFavourites = (id) => {
+		console.log("id", id);
+		const base_url = "http://localhost:3000/students/favourites";
+		const data = { token: sessionStorage.getItem("token"), tutor_id: id };
+		axios
+			.put(base_url, data)
+			.then((response) => {
+				console.log(response);
+			})
+			.catch((error) => {
+				console.log("error", error.response);
+			});
+		window.location.reload(false);
+		console.log(JSON.stringify(data));
+	};
 
-    
-        {this.state.displayTutors && this.state.displayTutors.map((tutor, id) => (
-        <div class="row d-flex justify-content-center card-lay m-4" key={id}>
-            <div class="col-md-7">
-                <div class="card p-3 py-4">
-                    <div class="text-center"> <img src={`../${tutor.path}`} width="100" class="rounded profile-picture"/>
-                        <br/>
-                        <b>Rating: </b>{tutor.rating} <i style={{color: '#ffb70b'}} class="bi bi-star-fill"></i>
-                        <br/> <b>Total Tutoring Hours: </b> {tutor.totalTutoringHours}
-                    </div>
-                    <div class="text-center mt-3"> <span class="bg-secondary p-1 rounded text-white">1000+ Chats</span>&nbsp;<span class="bg-secondary p-1 rounded text-white">Certified</span>
-                        <h5 class="mt-2 mb-0"><div className="tutor-info-name"> {tutor.first_name} {tutor.last_name} </div> </h5>
-                        <div class="px-4 mt-1">
-                            <p class="fonts" style={{fontSize: '20px'}}><i className="tutor-bio">{tutor.bio}</i></p>
-                            <p class="fonts" style={{fontSize: '16px'}}><i className="tutor-bio"><b>Courses: </b>{tutor.courses}</i></p>
-                        </div>
-                        <div class="buttons">
-                            <button class="btn btn-outline-primary px-4"><i class="bi bi-heart"></i>  Add to Favorites</button> 
-                            <Link to={`${tutor._id}`}>
-                                <button class="btn btn-warning px-4 ms-3 text-white" onClick={() => this.openDetails(tutor._id)}>Profile</button>
-                            </Link>    
-                        </div>
-                    </div>
-                </div>
-            </div>
-            </div>
-        ))}
+	render() {
+		console.log("display list");
+		console.log(this.state);
+		return (
+			<div>
+				<Header />
 
+				<div
+					class="col-5 text-center"
+					style={{ marginTop: "75px", marginLeft: "auto", marginRight: "auto" }}
+				>
+					<form class="d-flex align-items-center">
+						<input
+							class="form-control input-sm"
+							style={{ height: "50px" }}
+							id="filter"
+							onSubmit={() => {}}
+							type="search"
+							placeholder="Search for Tutors or Courses..."
+							aria-label="Search"
+						/>
+						<button
+							type="button"
+							id="filterBtn"
+							class="btn btn-warning btn-lg m-1"
+							onClick={() => this.filterTutors()}
+						>
+							Filter
+						</button>
+					</form>
+				</div>
 
-{/* <div >
+				{this.state.displayTutors &&
+					this.state.displayTutors.map((tutor, id) => (
+						<div
+							class="row d-flex justify-content-center card-lay m-4"
+							key={id}
+						>
+							<div class="col-md-7">
+								<div class="card p-3 py-4">
+									<div class="text-center">
+										{" "}
+										<img
+											src={`../${tutor.path}`}
+											width="100"
+											class="rounded profile-picture"
+										/>
+										<br />
+										<b>Rating: </b>
+										{tutor.rating}{" "}
+										<i style={{ color: "#ffb70b" }} class="bi bi-star-fill"></i>
+										<br /> <b>Total Tutoring Hours: </b>{" "}
+										{tutor.totalTutoringHours}
+									</div>
+									<div class="text-center mt-3">
+										{" "}
+										<span class="bg-secondary p-1 rounded text-white">
+											1000+ Chats
+										</span>
+										&nbsp;
+										<span class="bg-secondary p-1 rounded text-white">
+											Certified
+										</span>
+										<h5 class="mt-2 mb-0">
+											<div className="tutor-info-name">
+												{" "}
+												{tutor.first_name} {tutor.last_name}{" "}
+											</div>{" "}
+										</h5>
+										<div class="px-4 mt-1">
+											<p class="fonts" style={{ fontSize: "20px" }}>
+												<i className="tutor-bio">{tutor.bio}</i>
+											</p>
+											<p class="fonts" style={{ fontSize: "16px" }}>
+												<i className="tutor-bio">
+													<b>Courses: </b>
+													{tutor.courses}
+												</i>
+											</p>
+										</div>
+										<div class="buttons">
+											<button
+												class="btn btn-outline-primary px-4"
+												onClick={() => this.addFavourites(tutor._id)}
+											>
+												<i class="bi bi-heart"></i> Add to Favorites
+											</button>
+											<Link to={`${tutor._id}`}>
+												<button
+													class="btn btn-warning px-4 ms-3 text-white"
+													onClick={() => this.openDetails(tutor._id)}
+												>
+													Profile
+												</button>
+											</Link>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					))}
+
+				{/* <div >
         <div class="container mt-5">
     <div class="row d-flex justify-content-center">
         <div class="col-md-7">
@@ -158,24 +239,24 @@ class Cards extends Component {
     </div>
 </div>
 </div> */}
-   
-        <Footer />
-        </div>
-    )
-  }
+
+				<Footer />
+			</div>
+		);
+	}
 }
 
-const mapStateToProps = state => {
-    return {
-        tutors: state.tutors.tutors
-    }
-}
+const mapStateToProps = (state) => {
+	return {
+		tutors: state.tutors.tutors,
+	};
+};
 
-const mapDispatchToProps = dispatch => {
-    return {
-        selectTutor: id => dispatch(selectTutor(id)),
-        setTutors: tutors => dispatch(setTutors(tutors))
-    }
-}
+const mapDispatchToProps = (dispatch) => {
+	return {
+		selectTutor: (id) => dispatch(selectTutor(id)),
+		setTutors: (tutors) => dispatch(setTutors(tutors)),
+	};
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(Cards)
+export default connect(mapStateToProps, mapDispatchToProps)(Cards);
