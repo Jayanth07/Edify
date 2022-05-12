@@ -194,22 +194,27 @@ class SignUp extends Component {
     console.log("Courses:", form.courses);
     console.log("Data: ", form);
 
-    const base_url = "http://localhost:3000/students/";
+    const base_url = "http://localhost:3000/loginsignup/register";
     const data = {
       first_name: form.firstname,
       last_name: form.lastname,
       bio: form.textarea,
-      mobile: form.mobile,
+      phone_number: form.mobile,
       email: form.email,
-      favourite_tutors: [1, 2],
+      password: form.password,
+      user_type: form.user,
+      courses: form.courses,
     };
     axios
       .post(base_url, data)
       .then((response) => {
         console.log(response);
+        console.log("log", response.data.error);
       })
       .catch((error) => {
-        console.log(error.response);
+        console.log("error", error.response.data.error);
+        const newerrorObj = { email: error.response.data.error };
+        this.setState({ formErrors: { ...formErrors, ...newerrorObj } });
       });
     console.log(JSON.stringify(data));
   };
