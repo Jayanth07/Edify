@@ -148,11 +148,11 @@ class SignUp extends Component {
       case "courses":
         if (!value[0]) errorMessage = "Please enter Courses.";
         break;
-      case "imageFile":
-        console.log("inside", value);
-        if (!value.name.match(/\.(jpg|jpeg|png)$/))
-          errorMessage = "Please select valid image.";
-        break;
+      // case "imageFile":
+      //   console.log("inside", value);
+      //   if (!value.name.match(/\.(jpg|jpeg|png)$/))
+      //     errorMessage = "Please select valid image.";
+      //   break;
       default:
         break;
     }
