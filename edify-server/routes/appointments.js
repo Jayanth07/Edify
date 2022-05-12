@@ -92,15 +92,15 @@ router.post('/', auth, function(req, res) {
 
 router.post('/currentappointments/', auth, function(req, res) {
   let available_times={
-    1:'8AM-9AM',
-    2:'9AM-10AM',
-    3:'10AM-11AM',
-    4:'11AM-12PM',
-    5:'12PM-1PM',
-    6:'1PM-2PM',
-    7:'2PM-3PM',
-    8:'3PM-4PM',
-    9:'4PM-5PM'
+    1:'8 AM - 9 AM',
+    2:'9 AM - 10 AM',
+    3:'10 AM - 11 AM',
+    4:'11 AM - 12 PM',
+    5:'12 PM - 1 PM',
+    6:'1 PM - 2 PM',
+    7:'2 PM - 3 PM',
+    8:'3 PM - 4 PM',
+    9:'4 PM - 5 PM'
      };
   const { tutor_id, selected_date, token } = req.body;
   if (!(tutor_id && selected_date && token)) {
@@ -120,7 +120,7 @@ router.post('/currentappointments/', auth, function(req, res) {
         let dt=new Date(appointments[key]['start_date_time']);
         dt=dt.getHours();
         dt=dt-7;
-        if(available_times[dt]!=undefined){
+        if(available_times[dt]){
           delete available_times[dt];
         }
       }

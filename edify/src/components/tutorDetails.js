@@ -9,7 +9,8 @@ class TutorDetails extends Component {
   state = {
       token: sessionStorage.getItem('token'),
       userType: sessionStorage.getItem('userType'),
-      feedbacks: {}
+      feedbacks: {},
+      slots: []
   }
 
   componentDidMount() {
@@ -30,6 +31,30 @@ class TutorDetails extends Component {
 		.catch((e) => {
       console.log(e)
     })
+
+    this.getAppointmentSlots( new Date().toISOString().slice(0, 10))
+  }
+
+  getAppointmentSlots = (date) => {
+    console.log('here we are')
+
+    fetch(`http://localhost:3000/appointments/currentappointments`, {
+      method: 'POST',
+      headers : { 
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        tutor_id: this.props.tutorsId,
+        token: sessionStorage.getItem('token'),
+        selected_date: date
+      })
+    })
+    .then( res => res.json() )
+    .then( (data) => {
+      this.setState({...this.state, slots: data})
+    })
+    .catch(console.log)
   }
 
   comment(tutorId) {
@@ -128,21 +153,17 @@ class TutorDetails extends Component {
 
                   <div class="col-sm">
                       <h4>Start date:</h4>
-                      <input className='rounded' type="date" id="startDate" name="trip-start" value="05/12/2022"></input>
+                      <input className='rounded' type="date" id="startDate" name="trip-start" value={ new Date().toISOString().slice(0, 10)}></input>
                   </div>
                   
                   <div class="col-sm">
                     <h4>Time Slot: </h4>
                     <select class="form-select" aria-label="Default select example">
-                      <option value="0">8 AM - 9 AM</option>
-                      <option value="1">9 AM - 10 AM</option>
-                      <option value="2">10 AM - 11 AM</option>
-                      <option value="3">11 AM - 12 PM</option>
-                      <option value="4">12 AM - 1 PM</option>
-                      <option value="5">1 PM - 2 PM</option>
-                      <option value="6">2 PM - 3 PM</option>
-                      <option value="7">3 PM - 4 PM</option>
-                      <option value="8">4 PM - 5 PM</option>
+                      {
+                        this.state.slots && this.state.slots.map((s, i) => (
+                          <option value={i + 1}>{s}</option>
+                        ))
+                      }
                     </select>
                   </div>
 
