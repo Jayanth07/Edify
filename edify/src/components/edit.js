@@ -14,7 +14,7 @@ const Edit = () => {
   const [mobile, setMobile] = useState("");
   const [bio, setBio] = useState("");
   const [courses, setCourses] = useState("");
-  let tutorId = '';
+  const [tutorId, setId] = useState('');
 
   const token = sessionStorage.getItem('token');
   const form = { mobile, bio, courses };
@@ -26,20 +26,19 @@ const Edit = () => {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
         },
-        body: {
-            token: token,
+        body: JSON.stringify({
             email: email,
             bio: bio,
-            courses: courses,
+            courses: courses.split(','),
             phone_number: mobile,
             first_name: firstname,
             last_name: lastname
-        }
+        })
         })
         .then( res => res.json() )
         .then( (tutor) => {
-          console.log('Okk')
-          console.log(tutor)
+      window.location.href = 'http://localhost:3001/';
+          
         })
         .catch(console.log)
 
@@ -64,7 +63,8 @@ const Edit = () => {
           setLastName(tutor.last_name)
           setMobile(tutor.phone_number)
           setBio(tutor.bio)
-          setCourses(tutor.courses.join(', '))
+          setCourses(tutor.courses.join(','))
+          setId(tutor._id)
         })
         .catch(console.log)
     }
