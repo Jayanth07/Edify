@@ -6,8 +6,10 @@ var db = monk('localhost:27017/edify');
 
 const jwt = require('jsonwebtoken');
 var collection = db.get('feedbacks');
+var studentCollection = db.get('students');
+const auth = require('./middleware/auth');
 
-router.get('/', function(req, res) {
+router.get('/', auth, function(req, res) {
   collection.find({}, function(err, feedbacks) {
     if (err)
      throw err;
@@ -23,7 +25,7 @@ router.get('/:id', function(req, res) {
   });
 });
 
-router.post('/', function(req, res) {
+router.post('/', auth, function(req, res) {
 
   const { rating, comment, token, tutor_id } = req.body;
 
@@ -37,13 +39,22 @@ router.post('/', function(req, res) {
     let email=token_obj.email;
     let user_type=token_obj.user_type;
     let student_id=token_obj.person_id;
+    let student_name;
+
+    studentCollection.findOne({_id: student_id}, function(err, student){
+      if (err)
+      throw err;
+      console.log(student.first_name+" "+student.last_name);
+      student_name=student.first_name+" "+student.last_name;
+    });
+
     collection.findOne({tutor_id: tutor_id}, function(err, feedback) {
       if (err)
         throw err;
       console.log("It's here");
       if (feedback && feedback.length!=0) {
       console.log("It's here too");
-      feedback.comments.push({"student_id": student_id , "rating": rating, "comment": comment});
+      feedback.comments.push({"student_id": student_id , student_name, "rating": rating, "comment": comment});
       console.log(feedback);
         collection.update({_id:feedback._id},
           {$set: {
@@ -61,7 +72,7 @@ router.post('/', function(req, res) {
             tutor_id: tutor_id,
             count: 1,
             avg_rating: rating,
-            comments: [{"student_id": student_id , "rating": rating, "comment": comment}]
+            comments: [{"student_id": student_id ,student_name, "rating": rating, "comment": comment}]
         }, function(err, feedback) {
           if (err)
            throw err;
