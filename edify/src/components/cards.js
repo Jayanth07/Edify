@@ -174,24 +174,22 @@ class Cards extends Component {
 										{" "}
 										<img
 											src={`../${tutor.path}`}
-											width="100"
+											width="200"
 											class="rounded profile-picture"
 										/>
 										<br />
-										<b>Rating: </b>
-										{tutor.rating}{" "}
-										<i style={{ color: "#ffb70b" }} class="bi bi-star-fill"></i>
+										
 										<br /> <b>Total Tutoring Hours: </b>{" "}
 										{tutor.total_tutoring_hours}
 									</div>
 									<div class="text-center mt-3">
 										{" "}
 										<span class="bg-secondary p-1 rounded text-white">
-											1000+ Chats
+											Hogwarts
 										</span>
 										&nbsp;
 										<span class="bg-secondary p-1 rounded text-white">
-											Certified
+											Certified Wizard
 										</span>
 										<h5 class="mt-2 mb-0">
 											<div className="tutor-info-name">

@@ -102,7 +102,7 @@ class Favourites extends Component {
 										{" "}
 										<img
 											src={`../${tutor.path}`}
-											width="100"
+											width="200"
 											class="rounded profile-picture"
 										/>
 										<br />
