@@ -16,13 +16,15 @@ class TutorDetails extends Component {
   componentDidMount() {
     let date = document.getElementById('startDate');
     let today = new Date().toISOString().slice(0, 10);
-    window.scrollTo(0, 0);
-    date.defaultValue = today;
-    date.onchange = () => {
-      console.log(date.value)
-      this.getAppointmentSlots(date.value)
-    }
 
+    if (date) {
+      window.scrollTo(0, 0);
+      date.defaultValue = today;
+      date.onchange = () => {
+        console.log(date.value)
+        this.getAppointmentSlots(date.value)
+      }
+    }
     fetch(`http://localhost:3000/feedbacks/${this.props.tutorDetails[0]._id}`, {
       method: 'get',
       headers : { 
@@ -38,7 +40,10 @@ class TutorDetails extends Component {
       console.log(e)
     })
 
-    this.getAppointmentSlots(today)
+    if (date) {
+      this.getAppointmentSlots(today)
+    }
+
   }
 
   bookAppointment = (tutorName) => {
@@ -176,7 +181,7 @@ console.log(new Date(date.value + "T" + (slot < 10 ? '0' + slot : '' + slot) + "
                </div>
                
                <div className="courses">Total Tutoring Hours
-                 <div className="course-details" style={{color: 'black'}}>{tutor.totalTutoringHours}</div>
+                 <div className="course-details" style={{color: 'black'}}>{tutor.total_tutoring_hours}</div>
                </div>
               <br/>
 

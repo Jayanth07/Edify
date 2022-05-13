@@ -58,6 +58,7 @@ router.post('/register', (req, res) => {
             studentDocument.phone_number=phone_number;
             studentDocument.first_name=first_name;
             studentDocument.last_name=last_name;
+            studentDocument.total_tutoring_hours=0;
 
 
             studentCollection.insert(studentDocument, (err2, student) => {

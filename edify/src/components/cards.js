@@ -12,6 +12,7 @@ class Cards extends Component {
 	state = {
 		displayTutors: this.props.tutors,
 		favouriteTutors: [],
+		totalTutoringHours: 0
 	};
 
 	componentDidMount() {
@@ -53,11 +54,16 @@ class Cards extends Component {
 							// const newList = tutorsdata.filter((e) =>
 							// 	this.state.favouriteTutors.includes(tutorsdata._id)
 							// );
-							let newFavourites = tutorsdata.filter((tutor) =>
-								this.state.favouriteTutors.some((fav) => tutor._id === fav)
-							);
+                            
+							let newFavourites = tutorsdata;
+                            if (this.state.favouriteTutors) {
+                                newFavourites = tutorsdata.filter((tutor) =>
+								    this.state.favouriteTutors.some((fav) => tutor._id === fav)
+							    );
+                            }
+                            
 							console.log("newList", newFavourites);
-							this.setState({ displayTutors: tutorsdata });
+							this.setState({ displayTutors: tutorsdata, totalTutoringHours: data[0].total_tutoring_hours });
 						})
 						.catch(console.log);
 					// this.props.setTutors(data);
@@ -151,6 +157,11 @@ class Cards extends Component {
 					</form>
 				</div>
 
+                {/* <div className="courses"><span className="m-5 p-1" style={{
+                    backgroundColor: "rgba(255, 255, 255, 0.85)",
+                    borderRadius: "15px",
+                  }}>Total Tutored Hours: {this.state.totalTutoringHours}</span></div> */}
+
 				{this.state.displayTutors &&
 					this.state.displayTutors.map((tutor, id) => (
 						<div
@@ -171,7 +182,7 @@ class Cards extends Component {
 										{tutor.rating}{" "}
 										<i style={{ color: "#ffb70b" }} class="bi bi-star-fill"></i>
 										<br /> <b>Total Tutoring Hours: </b>{" "}
-										{tutor.totalTutoringHours}
+										{tutor.total_tutoring_hours}
 									</div>
 									<div class="text-center mt-3">
 										{" "}
@@ -200,7 +211,7 @@ class Cards extends Component {
 											</p>
 										</div>
 										<div class="buttons">
-											{sessionStorage.getItem('token') && !this.state.favouriteTutors.includes(tutor._id) && (
+											{sessionStorage.getItem('token') && (!this.state.favouriteTutors || (this.state.favouriteTutors && !this.state.favouriteTutors.includes(tutor._id))) && (
 												<button
 													class="btn btn-outline-primary px-4"
 													onClick={() => this.addFavourites(tutor._id)}
@@ -208,7 +219,7 @@ class Cards extends Component {
 													<i class="bi bi-heart"></i> Add to Favorites
 												</button>
 											)}
-											{sessionStorage.getItem('token') && this.state.favouriteTutors.includes(tutor._id) && (
+											{sessionStorage.getItem('token') && this.state.favouriteTutors && this.state.favouriteTutors.includes(tutor._id) && (
 												<button
 													class="btn btn-warning px-4 ms-3 text-white"
 													disabled

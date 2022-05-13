@@ -49,7 +49,7 @@ class Header extends Component {
 											</a>
 										</Link>
 									</li>
-									{this.state.userType !== "tutor" && (
+									{(
 										<li class="nav-item">
 											<Link style={noUnderline} to={`/${PATH.TUTORS}`}>
 												<a className="nav-link" href="#">

@@ -41,7 +41,7 @@ class Favourites extends Component {
 					})
 						.then((res) => res.json())
 						.then((data) => {
-							this.setState({ favouriteTutors: data[0].favourite_tutors, totalTutoringHours: data[0].totalTutoringHours });
+							this.setState({ favouriteTutors: data[0].favourite_tutors, totalTutoringHours: data[0].total_tutoring_hours });
 							this.props.setTutors(tutorsdata);
 							// const newList = tutorsdata.filter((e) =>
 							// 	this.state.favouriteTutors.includes(tutorsdata._id)
@@ -87,7 +87,9 @@ class Favourites extends Component {
 				<div className="courses"><span className="m-5 p-1" style={{
                     backgroundColor: "rgba(255, 255, 255, 0.85)",
                     borderRadius: "15px",
-                  }}>Total Tutoring Hours: {this.state.totalTutoringHours}</span></div>
+                  }}>Total Tutoring Hours: {this.state.totalTutoringHours}</span>
+				</div>
+
 				{this.state.displayTutors &&
 					this.state.displayTutors.map((tutor, id) => (
 						<div
@@ -143,14 +145,6 @@ class Favourites extends Component {
 											>
 												<i class="bi bi-heart"></i> Remove from Favorites
 											</button>
-											<Link to={`${tutor._id}`}>
-												<button
-													class="btn btn-warning px-4 ms-3 text-white"
-													onClick={() => this.openDetails(tutor._id)}
-												>
-													Profile
-												</button>
-											</Link>
 										</div>
 									</div>
 								</div>
