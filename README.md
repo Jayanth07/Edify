@@ -4,6 +4,10 @@
 This a website that allows tutors and students to create accounts and communicate.
 Students can filter tutors based on courses they want to learn and book appointments with them.
 
+Techstack to be installed:
+- Node and Express
+- React.js
+- MongoDB (Schema is well-defined in the report)
 
 Steps for starting up service:
 1. Go to \edify-server and type "nodemon" to run node.js server on localhost:3000.
